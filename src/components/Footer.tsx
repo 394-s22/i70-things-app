@@ -1,9 +1,5 @@
-import { AppBar, Toolbar, IconButton, Box, Fab } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import MenuIcon from "@mui/icons-material/Menu";
+import { AppBar, Box, Fab, IconButton, styled, Toolbar } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import SearchIcon from "@mui/icons-material/Search";
-import MoreIcon from "@mui/icons-material/MoreVert";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 
@@ -16,7 +12,7 @@ const StyledFab = styled(Fab)({
   margin: "0 auto",
 });
 
-function Footer() {
+const Footer = () => {
   return (
     <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }} component="footer">
       <Toolbar>
@@ -30,9 +26,9 @@ function Footer() {
         <IconButton color="inherit">
           <FormatListBulletedIcon />
         </IconButton>
-        
       </Toolbar>
     </AppBar>
   );
 }
+
 export default Footer;
