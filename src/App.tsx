@@ -1,10 +1,23 @@
-import './App.css';
-import Footer from './components/Footer';
+import { Route, Routes } from "react-router-dom";
 
-function App() {
+import FeedPage from './routes/FeedPage'
+import MapPage from './routes/MapPage'
+
+import './App.css';
+
+const App = () => {
   return (
     <div className="App">
-      <Footer/>
+      <Routes>
+        <Route
+          path="/"
+          element={<MapPage  />}
+        />
+        <Route
+          path="/feed"
+          element={<FeedPage />}
+        />
+      </Routes>
     </div>
   );
 }
