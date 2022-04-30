@@ -4,6 +4,7 @@ import Footer from "../components/Footer"
 const MapPage = () => {
     return (
         <>
+        Map Page
             <Footer/>
         </>
     );
