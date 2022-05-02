@@ -1,6 +1,6 @@
 import AddIcon from "@mui/icons-material/Add";
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import { AppBar, Box, Fab, IconButton, styled, Toolbar } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -15,14 +15,19 @@ const StyledFab = styled(Fab)({
 
 const Footer = () => {
   return (
-    <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }} component="footer">
+    <AppBar
+      position="fixed"
+      color="primary"
+      sx={{ top: "auto", bottom: 0 }}
+      component="footer"
+    >
       <Toolbar>
         <IconButton color="inherit" aria-label="open drawer">
           <Link to="/" className="link">
             <MapOutlinedIcon />
           </Link>
         </IconButton>
-        <StyledFab color="error" aria-label="add">
+        <StyledFab color="secondary" aria-label="add">
           <AddIcon />
         </StyledFab>
         <Box sx={{ flexGrow: 1 }} />
@@ -34,6 +39,5 @@ const Footer = () => {
       </Toolbar>
     </AppBar>
   );
-}
-
+};
 export default Footer;
