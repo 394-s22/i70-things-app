@@ -1,12 +1,6 @@
 import React from "react";
-import Footer from "../components/Footer"
 
 const FeedPage = () => {
-    return (
-        <>
-        Feed Page
-            <Footer/>
-        </>
-    );
-}
+	return <>Feed Page</>;
+};
 export default FeedPage;

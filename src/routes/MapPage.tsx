@@ -1,13 +1,7 @@
 import React from "react";
-import Footer from "../components/Footer"
 
 const MapPage = () => {
-    return (
-        <>
-        Map Page
-            <Footer/>
-        </>
-    );
-}
+	return <>Map Page</>;
+};
 
 export default MapPage;
