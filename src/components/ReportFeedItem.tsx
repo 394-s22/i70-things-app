@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography } from "@mui/material/";
+import { Box, Typography, Paper } from "@mui/material/";
 import { Report } from "../utils/types";
 
 interface ReportCardProps {
@@ -8,12 +8,19 @@ interface ReportCardProps {
 
 const ReportFeedCard = ({ report }: ReportCardProps) => {
   return (
-    <Box sx={{ flexGrow: 1, backgroundColor: "#aaa" }}>
+    <Paper
+      elevation={3}
+      style={{
+        marginBottom: "1rem",
+        borderRadius: "25px",
+        width: "250px",
+      }}
+    >
       <Typography>Description: {report.description}</Typography>
       <Typography>Time Stamp: {report.timestamp}</Typography>
       <Typography>Mile Marker: {report.mileMarker}</Typography>
       <Typography>Direction: {report.direction}</Typography>
-    </Box>
+    </Paper>
   );
 };
 

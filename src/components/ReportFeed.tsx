@@ -13,18 +13,26 @@ const ReportFeed = () => {
     description: "description",
     timestamp: "timeStamp",
     mileMarker: 419.99,
-    direction: "direction"
-  }
+    direction: "direction",
+  };
 
   return (
-    <Box display="flex" flexDirection="column">
+    <Box
+      display="flex"
+      flexDirection="column"
+      mt="3rem"
+      style={{
+        alignItems: "flex-end",
+        marginRight: "25px",
+      }}
+    >
       {data ? (
         data.map((report: Report) => {
           return <ReportFeedItem report={report} />;
         })
       ) : (
         //This is technically not needed, and we should replace with some error signaling if data never comes
-      <ReportFeedItem report={fakeData} />
+        <ReportFeedItem report={fakeData} />
       )}
     </Box>
   );
