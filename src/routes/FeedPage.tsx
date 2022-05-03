@@ -1,10 +1,10 @@
 import React from "react";
-import ReportList from "../components/ReportList";
+import ReportFeed from "../components/ReportFeed";
 
 const FeedPage = () => {
   return (
     <>
-      <ReportList />
+      <ReportFeed />
     </>
   );
 };

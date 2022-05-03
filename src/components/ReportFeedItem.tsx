@@ -6,7 +6,7 @@ interface ReportCardProps {
   report: Report;
 }
 
-const ReportCard = ({ report }: ReportCardProps) => {
+const ReportFeedCard = ({ report }: ReportCardProps) => {
   return (
     <Box sx={{ flexGrow: 1, backgroundColor: "#aaa" }}>
       <Typography>Description: {report.description}</Typography>
@@ -14,4 +14,4 @@ const ReportCard = ({ report }: ReportCardProps) => {
   );
 };
 
-export default ReportCard;
+export default ReportFeedCard;
