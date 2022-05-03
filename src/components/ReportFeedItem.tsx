@@ -5,7 +5,7 @@ import { Report } from "../utils/types";
 interface ReportCardProps {
   report: Report;
 }
-
+// A reportFeedCard
 const ReportFeedCard = ({ report }: ReportCardProps) => {
   return (
     <Paper
