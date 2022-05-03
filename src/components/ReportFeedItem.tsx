@@ -8,19 +8,36 @@ interface ReportCardProps {
 // A reportFeedCard
 const ReportFeedCard = ({ report }: ReportCardProps) => {
   return (
-    <Paper
-      elevation={3}
+    <Box style={{
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: "1rem",
+    }}>
+      <Box component="img" src="https://picsum.photos/600/430?id=828"
       style={{
-        marginBottom: "1rem",
-        borderRadius: "25px",
-        width: "250px",
-      }}
-    >
-      <Typography>Description: {report.description}</Typography>
-      <Typography>Time Stamp: {report.timestamp}</Typography>
-      <Typography>Mile Marker: {report.mileMarker}</Typography>
-      <Typography>Direction: {report.direction}</Typography>
-    </Paper>
+          borderRadius: "50%",
+          width:"100px",
+          height: "100px",
+          backgroundColor: "red",
+          marginRight: "1rem",
+        }}></Box>
+      <Paper
+        elevation={3}
+        style={{
+          borderRadius: "25px",
+          width: "200px",
+          textAlign: "left",
+          padding: "1rem",
+        }}
+      >
+        <Typography>Description: {report.description}</Typography>
+        <Typography>{report.timestamp}</Typography>
+        <Typography>Mile Marker: {report.mileMarker}</Typography>
+        <Typography>{report.direction}</Typography>
+      </Paper>
+    </Box>
   );
 };
 
