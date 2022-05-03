@@ -17,11 +17,11 @@ axios.defaults.baseURL =
   "https://api.airtable.com/v0/appXtIml8So8edpwF/reports"; //content type to send with all POST requests
 axios.defaults.headers.post["Content-Type"] = "application/json"; //authenticate to the base with the API key
 // @ts-ignore
-axios.defaults.headers["Authorization"] = "keylvCxPGVKWeoE4u";
+axios.defaults.headers["Authorization"] = "Bearer keylvCxPGVKWeoE4u";
 
 const App = () => {
   const { data } = useData();
-  console.log(data);
+  console.log(data); //loads multiple times
 
   return (
     <ThemeProvider theme={theme}>

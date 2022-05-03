@@ -13,8 +13,14 @@ export default function useData() {
 
   const getData = async () => {
     return axios.get("/").then((res) =>
+      
+      {
       //@ts-ignore
-      setData(res.data.records)
+      const formattedResult = res.data.records.map((record) =>{
+        return record.fields
+      } )
+      setData(formattedResult)
+    }
     );
   };
   return {
