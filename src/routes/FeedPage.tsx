@@ -1,6 +1,11 @@
 import React from "react";
+import ReportList from "../components/ReportList";
 
 const FeedPage = () => {
-	return <>Feed Page</>;
+  return (
+    <>
+      <ReportList />
+    </>
+  );
 };
 export default FeedPage;

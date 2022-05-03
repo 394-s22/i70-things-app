@@ -1,11 +1,17 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
+import * as React from "react";
+import { Box, Typography } from "@mui/material/";
+import { Report } from "../utils/types";
 
+interface ReportCardProps {
+  report: Report;
+}
 
-export default function ButtonAppBar() {
+const ReportCard = ({ report }: ReportCardProps) => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      
+    <Box sx={{ flexGrow: 1, backgroundColor: "#aaa" }}>
+      <Typography>Description: {report.description}</Typography>
     </Box>
   );
-}
+};
+
+export default ReportCard;

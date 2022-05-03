@@ -20,9 +20,6 @@ axios.defaults.headers.post["Content-Type"] = "application/json"; //authenticate
 axios.defaults.headers["Authorization"] = "Bearer keylvCxPGVKWeoE4u";
 
 const App = () => {
-  const { data } = useData();
-  console.log(data); //loads multiple times
-
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
