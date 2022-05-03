@@ -8,6 +8,7 @@ const ReportFeed = () => {
   const [data] = useData<ReportArr>();
   console.log(data);
 
+  // Use this just in case
   const fakeData: Report = {
     description: "description",
     timestamp: "timeStamp",
@@ -22,6 +23,7 @@ const ReportFeed = () => {
           return <ReportFeedItem report={report} />;
         })
       ) : (
+        //This is technically not needed, and we should replace with some error signaling if data never comes
       <ReportFeedItem report={fakeData} />
       )}
     </Box>

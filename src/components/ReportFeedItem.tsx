@@ -10,6 +10,9 @@ const ReportFeedCard = ({ report }: ReportCardProps) => {
   return (
     <Box sx={{ flexGrow: 1, backgroundColor: "#aaa" }}>
       <Typography>Description: {report.description}</Typography>
+      <Typography>Time Stamp: {report.timestamp}</Typography>
+      <Typography>Mile Marker: {report.mileMarker}</Typography>
+      <Typography>Direction: {report.direction}</Typography>
     </Box>
   );
 };
