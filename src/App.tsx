@@ -13,8 +13,10 @@ import "./App.css";
 import axios from "axios";
 
 new Airtable({ apiKey: "keylvCxPGVKWeoE4u" }).base("appXtIml8So8edpwF");
+
 axios.defaults.baseURL =
   "https://api.airtable.com/v0/appXtIml8So8edpwF/reports"; //content type to send with all POST requests
+
 axios.defaults.headers.post["Content-Type"] = "application/json"; //authenticate to the base with the API key
 // @ts-ignore
 axios.defaults.headers["Authorization"] = "Bearer keylvCxPGVKWeoE4u";
