@@ -22,8 +22,7 @@ const ReportFeed = () => {
       flexDirection="column"
       mt="3rem"
       style={{
-        alignItems: "flex-end",
-        marginRight: "25px",
+        alignItems: "center",
       }}
     >
       {data ? (
