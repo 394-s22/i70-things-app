@@ -1,15 +1,11 @@
+import { ThemeProvider } from "@mui/material/styles";
 import { Route, Routes } from "react-router-dom";
-
-import FeedPage from "./routes/FeedPage";
-import MapPage from "./routes/MapPage";
+import "./App.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import FeedPage from "./routes/FeedPage";
+import MapPage from "./routes/MapPage";
 import { theme } from "./utils/theme";
-import useData from "./utils/useData";
-
-import "./App.css";
-import axios from "axios";
 
 const App = () => {
   return (
