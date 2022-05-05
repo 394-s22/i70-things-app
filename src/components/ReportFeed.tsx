@@ -1,20 +1,15 @@
-import * as React from "react";
 import { Box, Typography } from "@mui/material";
-import useData from "../utils/useData";
+import * as React from "react";
+import useFetchReports from "../hooks/useFetchReports";
+import { Report } from "../utils/types";
 import ReportFeedItem from "./ReportFeedItem";
-import { Report, ReportArr } from "../utils/types";
 
 const ReportFeed = () => {
-  const [data] = useData<ReportArr>();
-  console.log(data);
+  const { reports, loading } = useFetchReports();
 
-  // Use this just in case
-  const fakeData: Report = {
-    description: "description",
-    timestamp: "timeStamp",
-    mileMarker: 419.99,
-    direction: "direction",
-  };
+  if (loading) {
+    return <Typography variant="h6">Loading...</Typography>;
+  }
 
   return (
     <Box
@@ -25,14 +20,9 @@ const ReportFeed = () => {
         alignItems: "center",
       }}
     >
-      {data ? (
-        data.map((report: Report) => {
-          return <ReportFeedItem report={report} />;
-        })
-      ) : (
-        //This is technically not needed, and we should replace with some error signaling if data never comes
-        <ReportFeedItem report={fakeData} />
-      )}
+      {reports.map((report: Report) => (
+        <ReportFeedItem report={report} />
+      ))}
     </Box>
   );
 };
