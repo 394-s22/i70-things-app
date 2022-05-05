@@ -120,7 +120,7 @@ const ReportFeedCard = ({ report }: ReportCardProps) => {
           />
           {report.direction}
         </Typography>
-        <Typography variant="caption">{"2 min ago (14:53)"}</Typography>
+        <Typography variant="caption">{timeAgo(report.timestamp)}</Typography>
       </Paper>
     </Box>
   );
