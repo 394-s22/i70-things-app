@@ -9,6 +9,7 @@ import { theme } from "./utils/theme";
 import apicall from "./utils/apicall";
 
 const App = () => {
+  console.log(apicall());
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
