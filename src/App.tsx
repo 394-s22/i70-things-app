@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import FeedPage from "./routes/FeedPage";
 import MapPage from "./routes/MapPage";
 import { theme } from "./utils/theme";
+import apicall from "./utils/apicall";
 
 const App = () => {
   return (
