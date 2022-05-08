@@ -10,7 +10,7 @@ export default function useCDOTData(): {
 
   useEffect(() => {
     axios(
-      "https://data.cotrip.org/api/v1/incidents?apiKey=E05N15S-Q754ZG9-HFGKVHR-HJCASDJ"
+      "https://data.cotrip.org/api/v1/incidents?apiKey=E05N15S-Q754ZG9-HFGKVHR-HJCASDJ&limit=10"
     ).then((res) => {
       console.log(res.data.features);
       setData(res.data.features);
