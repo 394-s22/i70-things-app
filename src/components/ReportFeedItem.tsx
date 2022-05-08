@@ -14,39 +14,38 @@ const timeAgo = (dateParam: any) => {
     return null;
   }
 
-  const date = typeof dateParam === 'object' ? dateParam : new Date(dateParam);
+  const date = typeof dateParam === "object" ? dateParam : new Date(dateParam);
   const DAY_IN_MS = 86400000; // 24 * 60 * 60 * 1000
   const today: any = new Date();
   const yesterday = new Date(today - DAY_IN_MS);
   const seconds = Math.round((today - date) / 1000);
   const minutes = Math.round(seconds / 60);
-  const hours = Math.round(minutes/60);
-  const days = Math.round(hours/24)
-  const months = Math.round(days/30)
-  const years = Math.round(months/12)
+  const hours = Math.round(minutes / 60);
+  const days = Math.round(hours / 24);
+  const months = Math.round(days / 30);
+  const years = Math.round(months / 12);
   const isYesterday = yesterday.toDateString() === date.toDateString();
 
-
   if (seconds < 5) {
-    return 'now';
+    return "now";
   } else if (seconds < 60) {
-    return `${ seconds } seconds ago`;
+    return `${seconds} seconds ago`;
   } else if (seconds < 90) {
-    return 'about a minute ago';
+    return "about a minute ago";
   } else if (minutes < 60) {
-    return `${ minutes } minutes ago`;
-  } else if (hours < 24){
-    return `${ hours } hours ago`;
+    return `${minutes} minutes ago`;
+  } else if (hours < 24) {
+    return `${hours} hours ago`;
   } else if (isYesterday) {
     return `yesterday`;
-  } else if (days < 30){
-    return `${ days } days ago`;
+  } else if (days < 30) {
+    return `${days} days ago`;
   } else if (months < 12) {
-    return `${ months } months ago`;
+    return `${months} months ago`;
   } else {
-    return `${ years } years ago`;
+    return `${years} years ago`;
   }
-}
+};
 
 // A reportFeedCard
 const ReportFeedCard = ({ report }: ReportCardProps) => {
@@ -58,24 +57,28 @@ const ReportFeedCard = ({ report }: ReportCardProps) => {
         alignItems: "center",
         justifyContent: "space-between",
         marginBottom: "1rem",
+        width: "400px",
       }}
     >
-      <Box
-        component="img"
-        src="https://picsum.photos/600/430?id=828"
-        style={{
-          borderRadius: "50%",
-          width: "100px",
-          height: "100px",
-          backgroundColor: "red",
-          marginRight: "1rem",
-        }}
-      ></Box>
+      {report.image && (
+        <Box
+          component="img"
+          src={report.image.thumbnails?.small.url}
+          style={{
+            borderRadius: "50%",
+            width: "100px",
+            height: "100px",
+            backgroundColor: "red",
+            marginRight: "1rem",
+            flexShrink: 0,
+          }}
+        ></Box>
+      )}
       <Paper
         elevation={3}
         style={{
           borderRadius: "25px",
-          width: "200px",
+          width: "100%",
           textAlign: "left",
           padding: "1rem",
         }}
