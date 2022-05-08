@@ -20,9 +20,8 @@ const ReportFeed = () => {
         alignItems: "center",
       }}
     >
-      {/* TODO: ADD A KEY TO THE REPORT FOR THIS LOOP */}
       {reports.map((report: Report) => (
-        <ReportFeedItem report={report} />
+        <ReportFeedItem key={report.id} report={report} />
       ))}
     </Box>
   );

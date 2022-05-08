@@ -14,12 +14,16 @@ export default function useFetchReports(): {
       base("reports")
         .select()
         .eachPage(function page(records, fetchNextPage) {
-          const data = records.map((record) => ({
-            timestamp: record.get("timestamp"),
-            description: record.get("description"),
-            direction: record.get("direction"),
-            mileMarker: record.get("mileMarker"),
-          }));
+          const data = records.map((record) => {
+            return {
+              id: record.id,
+              timestamp: record.get("timestamp"),
+              description: record.get("description"),
+              direction: record.get("direction"),
+              mileMarker: record.get("mileMarker"),
+              image: record.get("image"),
+            };
+          });
 
           setReports(data as Report[]);
           setLoading(false);
