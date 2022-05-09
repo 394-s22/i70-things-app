@@ -27,10 +27,7 @@ const Footer = () => {
     >
       <AddRecordModal
         isOpen={addRecordModalOpen}
-        onClose={() => {
-          console.log("!!");
-          setAddRecordModalOpen(false);
-        }}
+        onClose={() => setAddRecordModalOpen(false)}
       />
       <Toolbar>
         <IconButton color="inherit" aria-label="open drawer">

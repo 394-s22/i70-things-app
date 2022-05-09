@@ -44,13 +44,7 @@ const AddRecordModal: React.FunctionComponent<AddRecordModalProps> = ({
   }
 
   return (
-    <Modal
-      open={isOpen}
-      onClose={() => {
-        console.log("requesting close");
-        onClose();
-      }}
-    >
+    <Modal open={isOpen} onClose={onClose}>
       <Box
         sx={{
           position: "absolute",
