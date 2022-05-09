@@ -75,7 +75,7 @@ const ReportFeedCard = ({ report }: ReportCardProps) => {
         elevation={3}
         style={{
           borderRadius: "25px",
-          width: "200px",
+          width: "100%",
           textAlign: "left",
           padding: "1rem",
         }}
