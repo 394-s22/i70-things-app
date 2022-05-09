@@ -4,6 +4,9 @@ import React from "react";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import {useRef, useState, useEffect} from "react";
 import { height } from "@mui/system";
+import ReportFeedItem from "../components/ReportFeedItem.tsx";
+import useFetchReports from "../hooks/useFetchReports.ts";
+import {Box, Typography} from "@mui/material";
 // const mapboxgl = require("mapbox-gl");
 mapboxgl.accessToken =
   "pk.eyJ1IjoibmlraGlsMDkyOSIsImEiOiJjbDJvMWFuM3AxMmFtM2JzM2VwbmZhejZmIn0.LQpNYBoPUTZY4q7EpAGOdg";
@@ -16,6 +19,9 @@ const MapPage = () => {
   const [lat, setLat] = useState(39.55);
   const [zoom, setZoom] = useState(8);
 
+  const { reports, loading } = useFetchReports();
+
+  
   useEffect(() => {
     if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
@@ -25,8 +31,17 @@ const MapPage = () => {
       zoom: zoom
     });
   });
-  
-  return <div style={{height:"400px", margin: "2em"}} ref={mapContainer}></div>;
+  return (
+  <div>
+    <div style={{height:"350px", margin: "4em", marginBottom: "0px"}} ref={mapContainer}>
+    </div>
+    <Typography>Recent reports</Typography>
+    {!loading && <Box display="flex"
+      flexDirection="column"
+      m="auto"
+      maxWidth="400px"
+      ><ReportFeedItem report={reports[0]}/></Box>}
+  </div>);
 };
 
 export default MapPage;
