@@ -7,19 +7,20 @@ import FeedPage from "./routes/FeedPage";
 import MapPage from "./routes/MapPage";
 import { theme } from "./utils/theme";
 import getCDOTData from "./hooks/useCDOTData";
+import {Box} from "@mui/material"
 
 const App = () => {
   getCDOTData();
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
+      <Box className="App" paddingBottom="75px">
         <Header />
         <Routes>
           <Route path="/" element={<MapPage />} />
           <Route path="/feed" element={<FeedPage />} />
         </Routes>
         <Footer />
-      </div>
+      </Box>
     </ThemeProvider>
   );
 };
