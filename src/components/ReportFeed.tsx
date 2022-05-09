@@ -20,10 +20,14 @@ const ReportFeed = () => {
         alignItems: "center",
       }}
     >
-      {/* TODO: ADD A KEY TO THE REPORT FOR THIS LOOP */}
-      {reports.map((report: Report) => (
-        <ReportFeedItem report={report} />
-      ))}
+      {reports
+        .sort(
+          (a, z) =>
+            new Date(z.timestamp).getTime() - new Date(a.timestamp).getTime()
+        )
+        .map((report: Report) => (
+          <ReportFeedItem key={report.id} report={report} />
+        ))}
     </Box>
   );
 };

@@ -2,7 +2,9 @@ import AddIcon from "@mui/icons-material/Add";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import { AppBar, Box, Fab, IconButton, styled, Toolbar } from "@mui/material";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import AddRecordModal from "./AddRecordModal";
 
 const StyledFab = styled(Fab)({
   position: "absolute",
@@ -14,6 +16,8 @@ const StyledFab = styled(Fab)({
 });
 
 const Footer = () => {
+  const [addRecordModalOpen, setAddRecordModalOpen] = useState(false);
+
   return (
     <AppBar
       position="fixed"
@@ -21,13 +25,21 @@ const Footer = () => {
       sx={{ top: "auto", bottom: 0 }}
       component="footer"
     >
+      <AddRecordModal
+        isOpen={addRecordModalOpen}
+        onClose={() => setAddRecordModalOpen(false)}
+      />
       <Toolbar>
         <IconButton color="inherit" aria-label="open drawer">
           <Link to="/" className="link">
             <MapOutlinedIcon />
           </Link>
         </IconButton>
-        <StyledFab color="secondary" aria-label="add">
+        <StyledFab
+          onClick={() => setAddRecordModalOpen(true)}
+          color="secondary"
+          aria-label="add"
+        >
           <AddIcon />
         </StyledFab>
         <Box sx={{ flexGrow: 1 }} />
