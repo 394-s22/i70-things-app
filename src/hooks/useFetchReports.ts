@@ -1,3 +1,4 @@
+import { Attachment } from "airtable";
 import { useState, useEffect } from "react";
 import { base } from "../utils/airtable";
 import { Report } from "../utils/types";
@@ -15,13 +16,17 @@ export default function useFetchReports(): {
         .select()
         .eachPage(function page(records, fetchNextPage) {
           const data = records.map((record) => {
+            const imageAttachments = record.get("image") as
+              | Attachment[]
+              | undefined;
+
             return {
               id: record.id,
               timestamp: record.get("timestamp"),
               description: record.get("description"),
               direction: record.get("direction"),
               mileMarker: record.get("mileMarker"),
-              image: record.get("image"),
+              image: imageAttachments?.[0],
             };
           });
 
