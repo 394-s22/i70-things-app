@@ -29,7 +29,8 @@ const MapPage = () => {
   }
 
   const errorLocation = () => {
-    console.log("error")
+    setLat(0)
+    setLng(0)
   }
 
   navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {enableHighAccuracy: true})
