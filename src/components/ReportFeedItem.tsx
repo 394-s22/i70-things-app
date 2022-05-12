@@ -63,7 +63,7 @@ const ReportFeedCard = ({ report }: ReportCardProps) => {
       {report.image && (
         <Box
           component="img"
-          src={report.image.thumbnails?.small.url}
+          src={report.image}
           style={{
             borderRadius: "50%",
             width: "100px",

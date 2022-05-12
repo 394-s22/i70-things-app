@@ -6,7 +6,7 @@ export type Report = {
   timestamp: string;
   mileMarker: number;
   direction: string;
-  image?: Attachment;
+  image?: string;
 };
 
 export type ReportArr = Report[];
