@@ -3,9 +3,11 @@ import * as React from "react";
 import useFetchReports from "../hooks/useFetchReports";
 import { Report } from "../utils/types";
 import ReportFeedItem from "./ReportFeedItem";
+import useCDOTData from "../hooks/useCDOTData";
 
 const ReportFeed = () => {
   const { reports, loading } = useFetchReports();
+  const { data, dataLoading } = useCDOTData();
 
   if (loading) {
     return <Typography variant="h6">Loading...</Typography>;

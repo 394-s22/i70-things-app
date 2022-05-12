@@ -3,10 +3,10 @@ import axios from "axios";
 
 export default function useCDOTData(): {
   data: any[];
-  loading: boolean;
+  dataLoading: boolean;
 } {
   const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState<any>(true);
+  const [dataLoading, setDataLoading] = useState<any>(true);
 
   useEffect(() => {
     axios(
@@ -14,12 +14,12 @@ export default function useCDOTData(): {
     ).then((res) => {
       console.log(res.data.features);
       setData(res.data.features);
-      setLoading(false);
+      setDataLoading(false);
     });
   }, []);
 
   return {
     data,
-    loading,
+    dataLoading,
   };
 }
