@@ -38,16 +38,17 @@ const AddRecordModal: React.FunctionComponent<AddRecordModalProps> = ({
     }
   };
 
-  async function handleSubmit() {
+  function handleInitializeUpload() {
     setSubmitting(true);
-
-    let image = "";
-    if (imageUploaded && imageFile) {
-      image = uploadImage(imageFile);
-      console.log(image);
+    if (!imageUploaded || !imageFile) {
+      completeAddRecord("");
+    } else {
+      uploadImage(imageFile, completeAddRecord);
     }
-    console.log(`url: ${image}`);
+  }
 
+  function completeAddRecord(imageUrl: string) {
+    let image: string = imageUrl;
     createReport({
       direction,
       mileMarker,
@@ -57,6 +58,7 @@ const AddRecordModal: React.FunctionComponent<AddRecordModalProps> = ({
     })
       .then(() => {
         setSubmitting(false);
+        onClose();
       })
       .catch((err) => {
         console.error(err);
@@ -158,7 +160,7 @@ const AddRecordModal: React.FunctionComponent<AddRecordModalProps> = ({
           </Box>
 
           <Box marginTop={2}>
-            <Button onClick={handleSubmit} variant="contained">
+            <Button onClick={handleInitializeUpload} variant="contained">
               {submitting ? "Submitting" : "Submit Report"}
             </Button>
           </Box>
