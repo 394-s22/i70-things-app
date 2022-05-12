@@ -36,7 +36,7 @@ const MapPage = () => {
 
   useEffect(() => {
     // Removed to allow the map to use the lng and lat properties.
-    if (map.current) return; // initialize map only once
+    // if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
