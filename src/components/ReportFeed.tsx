@@ -14,14 +14,16 @@ const ReportFeed = () => {
 
   const reportData = [
     ...reports,
-    ...data.map((item, i) => {
+    ...data
+    .filter(item => item.properties.routeName.inclues('I-70')) //FILTERING NEEDS TO BE TESTED
+    .map((item, i) => {
       return {
         id: String(i),
         description: item.properties.travelerInformationMessage,
         timestamp: item.properties.startTime,
         mileMarker: item.properties.marker,
         direction: item.properties.direction,
-      };
+      };        
     }),
   ];
 
