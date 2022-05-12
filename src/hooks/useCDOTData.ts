@@ -5,7 +5,7 @@ export default function useCDOTData(): {
   data: any[];
   dataLoading: boolean;
 } {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<any[]>([]);
   const [dataLoading, setDataLoading] = useState<any>(true);
 
   useEffect(() => {

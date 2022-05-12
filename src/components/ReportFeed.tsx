@@ -4,18 +4,28 @@ import useFetchReports from "../hooks/useFetchReports";
 import { Report } from "../utils/types";
 import ReportFeedItem from "./ReportFeedItem";
 import useCDOTData from "../hooks/useCDOTData";
+import { ReportSharp } from "@mui/icons-material";
 
 const ReportFeed = () => {
   const { reports, loading } = useFetchReports();
   const { data, dataLoading } = useCDOTData();
 
-  const [allData, setAllData] = useState<Report[]|null>(null);
-  useEffect(() => {
-    //const reportedData = data.map((x) => new Report())
-    setAllData(reports.concat(data));
-  }, [reports, data]);
+  const [allData, setAllData] = useState<Report[] | null>(null);
 
-  if (loading) {
+  const reportData = [
+    ...reports,
+    ...data.map((item, i) => {
+      return {
+        id: String(i),
+        description: item.properties.travelerInformationMessage,
+        timestamp: item.properties.startTime,
+        mileMarker: item.properties.marker,
+        direction: item.properties.direction,
+      };
+    }),
+  ];
+
+  if (loading || !reportData) {
     return <Typography variant="h6">Loading...</Typography>;
   }
 
@@ -28,7 +38,7 @@ const ReportFeed = () => {
         alignItems: "center",
       }}
     >
-      {reports
+      {reportData
         .sort(
           (a, z) =>
             new Date(z.timestamp).getTime() - new Date(a.timestamp).getTime()
