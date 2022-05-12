@@ -16,22 +16,37 @@ mapboxgl.accessToken =
 const MapPage = () => {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(-106.6);
-  const [lat, setLat] = useState(39.55);
-  const [zoom, setZoom] = useState(8);
+  const [lng, setLng] = useState(0);
+  const [lat, setLat] = useState(0);
+  const [zoom, setZoom] = useState(15);
 
   const { reports, loading } = useFetchReports();
 
-  
+
+  const successLocation = position => {
+    setLat(position.coords.latitude)
+    setLng(position.coords.longitude)
+  }
+
+  const errorLocation = () => {
+    console.log("error")
+  }
+
+  navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {enableHighAccuracy: true})
+
   useEffect(() => {
-    if (map.current) return; // initialize map only once
+    // Removed to allow the map to use the lng and lat properties.
+    // if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [lng, lat],
       zoom: zoom
-    });
-  });
+    })
+
+  }, [lat, lng, zoom]);
+
+
   return (
   <div>
     <div style={{height:"350px", margin: "4em", marginBottom: "0px"}} ref={mapContainer}>
