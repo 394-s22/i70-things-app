@@ -10,6 +10,7 @@ const ReportFeed = () => {
   if (loading) {
     return <Typography variant="h6">Loading...</Typography>;
   }
+  console.log(reports)
 
   return (
     <Box
