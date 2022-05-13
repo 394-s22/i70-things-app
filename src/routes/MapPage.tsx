@@ -41,7 +41,7 @@ const MapPage = () => {
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [lng, lat],
-      zoom: zoom
+      zoom: zoom,
     })
     navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {enableHighAccuracy: true})
 
@@ -61,17 +61,8 @@ const MapPage = () => {
 
 
   return (
-  <div>
-    <div style={{height:"350px", margin: "4em", marginBottom: "0px"}} ref={mapContainer}>
-    </div>
-    <Typography sx={{padding: 1}} fontSize="1.2em">Recent reports</Typography>
-    {!loading && <Box display="flex"
-      flexDirection="column"
-      m="auto"
-      maxWidth="400px"
-      ><ReportFeedItem report={reports[0]}/></Box>}
-      <Link to="/feed"><Typography color="#666" display="inline-block">See all reports →</Typography></Link>
-  </div>);
+    <Box style={{height:"calc(100vh-120px)"}} height="calc(100vh - 128px)" ref={mapContainer}>
+    </Box>);
 };
 
 export default MapPage;

@@ -8,7 +8,7 @@ import { styled } from "@mui/material/styles";
 const offset = {
   position: "absolute",
   zIndex: 1,
-  top: 15,
+  top: "3px",
   left: 0,
   right: 0,
   margin: "0 auto",
@@ -21,7 +21,7 @@ export default function ButtonAppBar() {
         <Toolbar sx={{ display: "flex", justifyContent: "Center" }}>
           <Box sx={offset}>
             <img
-              width="100"
+              width="60px"
               src="/images/i70-things-logo.png"
               alt="i70 Things logo"
             />
