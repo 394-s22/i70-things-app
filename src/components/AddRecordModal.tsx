@@ -9,6 +9,8 @@ import {
   Typography,
 } from "@mui/material";
 import { createReport } from "../utils/airtable";
+import { uploadImage } from "../utils/uploadImage";
+import { time } from "console";
 
 interface AddRecordModalProps {
   isOpen: boolean;
@@ -26,17 +28,37 @@ const AddRecordModal: React.FunctionComponent<AddRecordModalProps> = ({
 
   const [submitting, setSubmitting] = useState(false);
 
-  function handleSubmit() {
-    setSubmitting(true);
+  // image handling
+  const [imageUploaded, setImageUploaded] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const onImageChange = (event: any) => {
+    if (event.target.files && event.target.files[0]) {
+      setImageFile(event.target.files[0]);
+      setImageUploaded(true);
+    }
+  };
 
+  function handleInitializeUpload() {
+    setSubmitting(true);
+    if (!imageUploaded || !imageFile) {
+      completeAddRecord("");
+    } else {
+      uploadImage(imageFile, completeAddRecord);
+    }
+  }
+
+  function completeAddRecord(imageUrl: string) {
+    let image: string = imageUrl;
     createReport({
       direction,
       mileMarker,
       description,
       incidentType,
+      image,
     })
       .then(() => {
         setSubmitting(false);
+        onClose();
       })
       .catch((err) => {
         console.error(err);
@@ -130,11 +152,15 @@ const AddRecordModal: React.FunctionComponent<AddRecordModalProps> = ({
           </Box>
 
           <Box>
-            <input type="file" />
+            <input
+              type="file"
+              accept=".png,.jpeg,.jpg"
+              onChange={onImageChange}
+            />
           </Box>
 
           <Box marginTop={2}>
-            <Button onClick={handleSubmit} variant="contained">
+            <Button onClick={handleInitializeUpload} variant="contained">
               {submitting ? "Submitting" : "Submit Report"}
             </Button>
           </Box>
