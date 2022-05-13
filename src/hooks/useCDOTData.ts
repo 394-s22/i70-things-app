@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { API_URL } from "../utils/constants";
+import { CDotResponse } from "../utils/types";
 
 export default function useCDOTData(): {
-  data: any[];
+  data: CDotResponse | undefined;
   loading: boolean;
 } {
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState<any>(true);
+  const [data, setData] = useState<CDotResponse | undefined>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios(
-      "https://data.cotrip.org/api/v1/incidents?apiKey=E05N15S-Q754ZG9-HFGKVHR-HJCASDJ&limit=10"
-    ).then((res) => {
-      console.log(res.data.features);
-      setData(res.data.features);
-      setLoading(false);
-    });
+    fetch(`${API_URL}/getCdotData`)
+      .then((res) => res.json())
+      .then((res) => {
+        setLoading(false);
+        setData(res.data);
+      });
   }, []);
 
   return {

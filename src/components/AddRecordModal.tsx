@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { createReport } from "../utils/airtable";
 import { uploadImage } from "../utils/uploadImage";
-import { time } from "console";
 
 interface AddRecordModalProps {
   isOpen: boolean;
