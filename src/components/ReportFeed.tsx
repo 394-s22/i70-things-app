@@ -15,7 +15,12 @@ const ReportFeed = () => {
   const reportData = [
     ...reports,
     ...data
-    .filter(item => item.properties.routeName.inclues('I-70')) //FILTERING NEEDS TO BE TESTED
+    .filter(item => {
+      if (item.properties.routeName){
+        return item.properties.routeName.includes('I-70')
+      }
+        
+    })
     .map((item, i) => {
       return {
         id: String(i),
