@@ -1,17 +1,13 @@
 //@ts-nocheck
-import React from "react";
+import { Box } from "@mui/material";
 //import mapboxgl from "mapbox-gl"; // or "const mapboxgl = require('mapbox-gl');"
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
-import {useRef, useState, useEffect} from "react";
-import ReportFeedItem from "../components/ReportFeedItem.tsx";
+import React, { useEffect, useRef, useState } from "react";
 import useFetchReports from "../hooks/useFetchReports.ts";
-import {Box, Typography} from "@mui/material";
-import {Link} from "react-router-dom"
 // const mapboxgl = require("mapbox-gl");
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibmlraGlsMDkyOSIsImEiOiJjbDJvMWFuM3AxMmFtM2JzM2VwbmZhejZmIn0.LQpNYBoPUTZY4q7EpAGOdg";
-
 
 const MapPage = () => {
   const mapContainer = useRef(null);
@@ -22,47 +18,47 @@ const MapPage = () => {
 
   const { reports, loading } = useFetchReports();
 
-
-  const successLocation = position => {
-    setLat(position.coords.latitude)
-    setLng(position.coords.longitude)
-  }
+  const successLocation = (position) => {
+    setLat(position.coords.latitude);
+    setLng(position.coords.longitude);
+  };
 
   const errorLocation = () => {
-    setLat(0)
-    setLng(0)
-  }
-
+    setLat(0);
+    setLng(0);
+  };
 
   useEffect(() => {
     // Removed to allow the map to use the lng and lat properties.
     // if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
+      style: "mapbox://styles/mapbox/streets-v11",
       center: [lng, lat],
       zoom: zoom,
-    })
-    navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {enableHighAccuracy: true})
+    });
+    navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
+      enableHighAccuracy: true,
+    });
 
-
-
-    const nav = new mapboxgl.NavigationControl()
-    map.current.addControl(nav, 'top-right')
-
+    const nav = new mapboxgl.NavigationControl();
+    map.current.addControl(nav, "top-right");
 
     var directions = new MapboxDirections({
       accessToken: mapboxgl.accessToken,
-      profile: 'mapbox/driving'
+      profile: "mapbox/driving",
     });
 
-    map.current.addControl(directions, "top-left")
+    map.current.addControl(directions, "top-left");
   }, [lat, lng, zoom]);
 
-
   return (
-    <Box style={{height:"calc(100vh-120px)"}} height="calc(100vh - 128px)" ref={mapContainer}>
-    </Box>);
+    <Box
+      style={{ height: "calc(100vh-120px)" }}
+      height="calc(100vh - 128px)"
+      ref={mapContainer}
+    ></Box>
+  );
 };
 
 export default MapPage;
