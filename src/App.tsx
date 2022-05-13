@@ -13,7 +13,7 @@ const App = () => {
   getCDOTData();
   return (
     <ThemeProvider theme={theme}>
-      <Box className="App" paddingBottom="75px" height="100%">
+      <Box className="App" height="100%">
         <Header />
         <Routes>
           <Route path="/" element={<MapPage />} />

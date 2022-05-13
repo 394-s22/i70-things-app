@@ -41,7 +41,7 @@ const MapPage = () => {
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [lng, lat],
-      zoom: zoom
+      zoom: zoom,
     })
     navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {enableHighAccuracy: true})
 
@@ -61,7 +61,7 @@ const MapPage = () => {
 
 
   return (
-    <Box style={{height:"100%", paddingBottom: "68px"}} ref={mapContainer}>
+    <Box style={{height:"calc(100vh-120px)"}} height="calc(100vh - 128px)" ref={mapContainer}>
     </Box>);
 };
 
