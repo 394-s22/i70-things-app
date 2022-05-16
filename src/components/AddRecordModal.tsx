@@ -72,7 +72,8 @@ const AddRecordModal: React.FunctionComponent<AddRecordModalProps> = ({
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 500,
+          maxWidth: "500px",
+          width: "100%",
           bgcolor: "background.paper",
           boxShadow: 24,
         }}
