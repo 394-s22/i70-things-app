@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import React, { useEffect, useRef, useState } from "react";
 import useFetchReports from "../hooks/useFetchReports.ts";
+import useMileMarkerToCoords from "../hooks/useMileMarkersToCoords";
 // const mapboxgl = require("mapbox-gl");
 
 mapboxgl.accessToken =
@@ -17,6 +18,8 @@ const MapPage = () => {
   const [zoom, setZoom] = useState(15);
 
   const { reports, loading } = useFetchReports();
+  const coords = useMileMarkerToCoords();
+  console.log('coords: ', coords)
 
   const successLocation = (position) => {
     setLat(position.coords.latitude);
