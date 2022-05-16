@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import React, { useEffect, useRef, useState } from "react";
 import useFetchReports from "../hooks/useFetchReports.ts";
-import getCoordinateData from "../utils/getCoordinateData";
+import getCoordinateData, { markerToCoords } from "../utils/getCoordinateData";
 // const mapboxgl = require("mapbox-gl");
 
 mapboxgl.accessToken =
