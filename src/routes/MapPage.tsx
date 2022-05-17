@@ -66,7 +66,8 @@ const MapPage = () => {
       reports.map(report =>{
         if (report.mileMarker != "undefined"){
           markerToCoords(report.mileMarker, (coords => {
-            new mapboxgl.Marker().setLngLat([coords[0], coords[1]]).addTo(map.current)
+            var popup =new mapboxgl.Popup().setText(report.description)
+            new mapboxgl.Marker().setLngLat([coords[0], coords[1]]).addTo(map.current).setPopup(popup)
           }))
         }else{
           console.log("invalid: ",report.mileMarker )
@@ -75,7 +76,7 @@ const MapPage = () => {
       })
     }
     
-  }, [loading]);
+  }, [reports]);
   
   
   
