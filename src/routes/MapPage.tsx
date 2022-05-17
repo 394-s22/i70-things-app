@@ -15,7 +15,7 @@ const MapPage = () => {
   const map = useRef(null);
   const [lng, setLng] = useState(0);
   const [lat, setLat] = useState(0);
-  const [zoom, setZoom] = useState(15);
+  const [zoom, setZoom] = useState(5);
   const [coords, setCoords] = useState(null);
 
   const { reports, loading } = useFetchReports();
@@ -24,7 +24,6 @@ const MapPage = () => {
     getCoordinateData(setCoords);
   }, []);
 
-  console.log(coords);
 
   const successLocation = (position) => {
     setLat(position.coords.latitude);
@@ -35,7 +34,7 @@ const MapPage = () => {
     setLat(0);
     setLng(0);
   };
-
+  
   useEffect(() => {
     // Removed to allow the map to use the lng and lat properties.
     // if (map.current) return; // initialize map only once
@@ -59,6 +58,27 @@ const MapPage = () => {
 
     map.current.addControl(directions, "top-left");
   }, [lat, lng, zoom]);
+
+  useEffect(() => {
+    if(loading){
+      console.log('loading')
+    }else{
+      reports.map(report =>{
+        if (report.mileMarker != "undefined"){
+          markerToCoords(report.mileMarker, (coords => {
+            new mapboxgl.Marker().setLngLat([coords[0], coords[1]]).addTo(map.current)
+          }))
+        }else{
+          console.log("invalid: ",report.mileMarker )
+        }
+       
+      })
+    }
+    
+  }, [loading]);
+  
+  
+  
 
   return (
     <Box
