@@ -6,14 +6,17 @@ import Header from "./components/Header";
 import FeedPage from "./routes/FeedPage";
 import MapPage from "./routes/MapPage";
 import { theme } from "./utils/theme";
-import getCDOTData from "./hooks/useCDOTData";
-import {Box} from "@mui/material"
+import { Box } from "@mui/material";
+import useCDOTData from "./hooks/useCDOTData";
 
 const App = () => {
-  getCDOTData();
+  const { data } = useCDOTData();
+
+  console.log(data);
+
   return (
     <ThemeProvider theme={theme}>
-      <Box className="App" paddingBottom="75px">
+      <Box className="App" height="100%">
         <Header />
         <Routes>
           <Route path="/" element={<MapPage />} />

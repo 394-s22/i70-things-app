@@ -8,13 +8,13 @@ import { ReportSharp } from "@mui/icons-material";
 
 const ReportFeed = () => {
   const { reports, loading } = useFetchReports();
-  const { data, dataLoading } = useCDOTData();
+  const { data } = useCDOTData();
 
   const [allData, setAllData] = useState<Report[] | null>(null);
 
   const reportData = [
     ...reports,
-    ...data
+    ...(data?.features ?? [])
     .filter(item => {
       if (item.properties.routeName){
         return item.properties.routeName.includes('I-70')
@@ -35,6 +35,7 @@ const ReportFeed = () => {
   if (loading || !reportData) {
     return <Typography variant="h6">Loading...</Typography>;
   }
+  console.log(reports)
 
   return (
     <Box
@@ -50,7 +51,7 @@ const ReportFeed = () => {
           (a, z) =>
             new Date(z.timestamp).getTime() - new Date(a.timestamp).getTime()
         )
-        .map((report: Report) => (
+        .map((report: any) => (
           <ReportFeedItem key={report.id} report={report} />
         ))}
     </Box>

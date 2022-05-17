@@ -9,6 +9,7 @@ export async function createReport(record: {
   direction: "east" | "west";
   mileMarker: number;
   incidentType: string;
+  image: string;
 }) {
   return new Promise((resolve, reject) => {
     base("reports").create(
@@ -20,6 +21,7 @@ export async function createReport(record: {
             direction: record.direction === "east" ? "Eastbound" : "Westbound",
             mileMarker: record.mileMarker,
             incidentType: record.incidentType,
+            image: record.image,
           },
         },
       ],
