@@ -19,12 +19,11 @@ export async function markerToCoords(
   )
     .then((res) => res.json())
     .then((res) => {
-      if (res[0]){
+      if (res[0]) {
         // console.log(res[0].the_geom.coordinates);
         callback(res[0].the_geom.coordinates);
-      }else{
-        console.log("not working: ", res, mileMarker)
+      } else {
+        console.log("not working: ", res, mileMarker);
       }
-      
     });
 }
