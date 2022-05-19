@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import React, { useEffect, useRef, useState } from "react";
 import useFetchReports from "../hooks/useFetchReports.ts";
+import getCoordinateData, { markerToCoords } from "../utils/getCoordinateData";
 // const mapboxgl = require("mapbox-gl");
 
 mapboxgl.accessToken =
@@ -11,10 +12,10 @@ mapboxgl.accessToken =
 
 const MapPage = () => {
   const mapContainer = useRef(null);
-  const map = useRef(null);
+  const mapRef = useRef(null);
   const [lng, setLng] = useState(0);
   const [lat, setLat] = useState(0);
-  const [zoom, setZoom] = useState(15);
+  const [zoom] = useState(5);
 
   const { reports, loading } = useFetchReports();
 
@@ -28,29 +29,62 @@ const MapPage = () => {
     setLng(0);
   };
 
+  const [mapLoaded, setMapLoaded] = useState(false);
+
   useEffect(() => {
     // Removed to allow the map to use the lng and lat properties.
     // if (map.current) return; // initialize map only once
-    map.current = new mapboxgl.Map({
+    const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
       center: [lng, lat],
       zoom: zoom,
     });
+
     navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
       enableHighAccuracy: true,
     });
 
     const nav = new mapboxgl.NavigationControl();
-    map.current.addControl(nav, "top-right");
+    map.addControl(nav, "top-right");
 
     var directions = new MapboxDirections({
+      controls: {
+        profileSwitcher: false,
+      },
       accessToken: mapboxgl.accessToken,
       profile: "mapbox/driving",
     });
 
-    map.current.addControl(directions, "top-left");
+    map.addControl(directions, "top-left");
+    map.on("data", () => {
+      setMapLoaded(true);
+    });
+
+    mapRef.current = map;
+
+    return () => {
+      map.off("data");
+    };
   }, [lat, lng, zoom]);
+
+  useEffect(() => {
+    if (loading || !mapLoaded) {
+      return;
+    }
+
+    reports.forEach((report) => {
+      if (report.mileMarker !== "undefined") {
+        markerToCoords(report.mileMarker, (coords) => {
+          var popup = new mapboxgl.Popup().setText(report.description);
+          new mapboxgl.Marker()
+            .setLngLat([coords[0], coords[1]])
+            .addTo(mapRef.current)
+            .setPopup(popup);
+        });
+      }
+    });
+  }, [reports, loading, mapLoaded]);
 
   return (
     <Box
