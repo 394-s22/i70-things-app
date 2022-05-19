@@ -12,17 +12,12 @@ mapboxgl.accessToken =
 
 const MapPage = () => {
   const mapContainer = useRef(null);
-  const map = useRef(null);
+  const mapRef = useRef(null);
   const [lng, setLng] = useState(0);
   const [lat, setLat] = useState(0);
-  const [zoom, setZoom] = useState(5);
-  const [coords, setCoords] = useState(null);
+  const [zoom] = useState(5);
 
   const { reports, loading } = useFetchReports();
-
-  useEffect(() => {
-    getCoordinateData(setCoords);
-  }, []);
 
   const successLocation = (position) => {
     setLat(position.coords.latitude);
@@ -33,6 +28,8 @@ const MapPage = () => {
     setLat(0);
     setLng(0);
   };
+
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
     // Removed to allow the map to use the lng and lat properties.
@@ -60,32 +57,34 @@ const MapPage = () => {
     });
 
     map.addControl(directions, "top-left");
-    map.current = map;
-    console.log(map.current);
+    map.on("data", () => {
+      setMapLoaded(true);
+    });
+
+    mapRef.current = map;
+
+    return () => {
+      map.off("data");
+    };
   }, [lat, lng, zoom]);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (loading) {
-        console.log("loading");
-      } else {
-        reports.map((report) => {
-          if (report.mileMarker != "undefined") {
-            markerToCoords(report.mileMarker, (coords) => {
-              var popup = new mapboxgl.Popup().setText(report.description);
-              new mapboxgl.Marker()
-                .setLngLat([coords[0], coords[1]])
-                .addTo(map.current)
-                .setPopup(popup);
-              console.log(map.current);
-            });
-          } else {
-            console.log("invalid: ", report.mileMarker);
-          }
+    if (loading || !mapLoaded) {
+      return;
+    }
+
+    reports.forEach((report) => {
+      if (report.mileMarker !== "undefined") {
+        markerToCoords(report.mileMarker, (coords) => {
+          var popup = new mapboxgl.Popup().setText(report.description);
+          new mapboxgl.Marker()
+            .setLngLat([coords[0], coords[1]])
+            .addTo(mapRef.current)
+            .setPopup(popup);
         });
       }
-    }, 5000);
-  }, [reports, loading]);
+    });
+  }, [reports, loading, mapLoaded]);
 
   return (
     <Box
