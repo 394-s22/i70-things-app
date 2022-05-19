@@ -24,7 +24,6 @@ const MapPage = () => {
     getCoordinateData(setCoords);
   }, []);
 
-
   const successLocation = (position) => {
     setLat(position.coords.latitude);
     setLng(position.coords.longitude);
@@ -34,57 +33,59 @@ const MapPage = () => {
     setLat(0);
     setLng(0);
   };
-  
+
   useEffect(() => {
     // Removed to allow the map to use the lng and lat properties.
     // if (map.current) return; // initialize map only once
-    map.current = new mapboxgl.Map({
+    const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
       center: [lng, lat],
       zoom: zoom,
     });
+
     navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
       enableHighAccuracy: true,
     });
 
     const nav = new mapboxgl.NavigationControl();
-    map.current.addControl(nav, "top-right");
+    map.addControl(nav, "top-right");
 
     var directions = new MapboxDirections({
       controls: {
-        profileSwitcher: false
+        profileSwitcher: false,
       },
       accessToken: mapboxgl.accessToken,
       profile: "mapbox/driving",
     });
 
-    map.current.addControl(directions, "top-left");
+    map.addControl(directions, "top-left");
+    map.current = map;
+    console.log(map.current);
   }, [lat, lng, zoom]);
 
   useEffect(() => {
-    if(loading){
-      console.log('loading')
-    }else{
-      reports.map(report =>{
-        if (report.mileMarker != "undefined"){
-          markerToCoords(report.mileMarker, (coords => {
-            console.log(coords)
-            var popup =new mapboxgl.Popup().setText(report.description)
-            new mapboxgl.Marker().setLngLat([coords[0], coords[1]]).addTo(map.current).setPopup(popup)
-            console.log(map.current)
-          }))
-        }else{
-          console.log("invalid: ",report.mileMarker )
-        }
-       
-      })
-    }
-    
-  }, [reports]);
-  
-  
-  
+    setTimeout(() => {
+      if (loading) {
+        console.log("loading");
+      } else {
+        reports.map((report) => {
+          if (report.mileMarker != "undefined") {
+            markerToCoords(report.mileMarker, (coords) => {
+              var popup = new mapboxgl.Popup().setText(report.description);
+              new mapboxgl.Marker()
+                .setLngLat([coords[0], coords[1]])
+                .addTo(map.current)
+                .setPopup(popup);
+              console.log(map.current);
+            });
+          } else {
+            console.log("invalid: ", report.mileMarker);
+          }
+        });
+      }
+    }, 5000);
+  }, [reports, loading]);
 
   return (
     <Box
