@@ -52,6 +52,9 @@ const MapPage = () => {
     map.current.addControl(nav, "top-right");
 
     var directions = new MapboxDirections({
+      controls: {
+        profileSwitcher: false
+      },
       accessToken: mapboxgl.accessToken,
       profile: "mapbox/driving",
     });
@@ -66,8 +69,10 @@ const MapPage = () => {
       reports.map(report =>{
         if (report.mileMarker != "undefined"){
           markerToCoords(report.mileMarker, (coords => {
+            console.log(coords)
             var popup =new mapboxgl.Popup().setText(report.description)
             new mapboxgl.Marker().setLngLat([coords[0], coords[1]]).addTo(map.current).setPopup(popup)
+            console.log(map.current)
           }))
         }else{
           console.log("invalid: ",report.mileMarker )
