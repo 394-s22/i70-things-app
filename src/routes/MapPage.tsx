@@ -30,6 +30,8 @@ const MapPage = () => {
   };
 
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [origin, setOrigin] = useState(null);
+  const [destination, setDestination] = useState(null);
 
   useEffect(() => {
     // Removed to allow the map to use the lng and lat properties.
@@ -56,9 +58,13 @@ const MapPage = () => {
       profile: "mapbox/driving",
     });
 
-    directions.on("route", (e) => {
-      let routes = e.route;
-      console.log(route);
+    directions.on("origin", (e) => {
+      console.log(e.feature.geometry.coordinates);
+      setOrigin(e.feature.geometry.coordinates);
+    });
+
+    directions.on("destination", (e) => {
+      setDestination(e.feature.geometry.coordinates);
     });
 
     map.addControl(directions, "top-left");
