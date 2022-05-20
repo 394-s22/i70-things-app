@@ -15,7 +15,7 @@ const MapPage = () => {
   const mapRef = useRef(null);
   const [lng, setLng] = useState(0);
   const [lat, setLat] = useState(0);
-  const [zoom] = useState(5);
+  const [zoom] = useState(15);
 
   const { reports, loading } = useFetchReports();
 
@@ -59,6 +59,11 @@ const MapPage = () => {
     map.addControl(directions, "top-left");
     map.on("data", () => {
       setMapLoaded(true);
+    });
+
+    map.on("load", function () {
+      directions.setOrigin([lng, lat]);
+      // directions.setOrigin("12, Elm Street, NY");
     });
 
     mapRef.current = map;
