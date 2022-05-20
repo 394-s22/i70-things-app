@@ -66,6 +66,21 @@ const MapPage = () => {
     directions.on("destination", (e) => {
       setDestination(e.feature.geometry.coordinates);
     });
+    
+    directions.on("route", (e) => {
+      console.log('reports', reports)
+      if (origin && destination){
+        var farRight = Math.max(origin[1], destination[1])
+        var farLeft = Math.min(origin[1], destination[1])
+       
+        // reports.filter( report => {
+        //   if markerToCoords(report.mileMarker, ()=>{
+        //     return coords
+        //   })
+        // })
+      }
+    });
+
 
     map.addControl(directions, "top-left");
     map.on("data", () => {
