@@ -55,8 +55,11 @@ const MapPage = () => {
       accessToken: mapboxgl.accessToken,
       profile: "mapbox/driving",
     });
-    
-    directions.on('route', e => {let routes = e.route})
+
+    directions.on("route", (e) => {
+      let routes = e.route;
+      console.log(route);
+    });
 
     map.addControl(directions, "top-left");
     map.on("data", () => {
@@ -71,11 +74,10 @@ const MapPage = () => {
   }, [lat, lng, zoom]);
 
   useEffect(() => {
-    console.log(mapRef.current)
+    console.log(mapRef.current);
     if (loading || !mapLoaded) {
       return;
     }
-    
 
     reports.forEach((report) => {
       if (report.mileMarker !== "undefined") {
