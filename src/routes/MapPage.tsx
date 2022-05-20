@@ -30,6 +30,7 @@ const MapPage = () => {
   };
 
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [semanticLocation, setSemanticLocation] = useState("");
 
   useEffect(() => {
     // Removed to allow the map to use the lng and lat properties.
@@ -54,7 +55,7 @@ const MapPage = () => {
       },
       accessToken: mapboxgl.accessToken,
       profile: "mapbox/driving",
-      placeholderOrigin: "Current Location"
+      placeholderOrigin: semanticLocation,
     });
 
     map.addControl(directions, "top-left");
@@ -62,9 +63,20 @@ const MapPage = () => {
       setMapLoaded(true);
     });
 
-    map.on("load", function () {
+    map.on("load", async function () {
       directions.setOrigin([lng, lat]);
-      // directions.setOrigin("12, Elm Street, NY");
+      const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?limit=1&types=place%2Cpostcode%2Caddress&access_token=${mapboxgl.accessToken}`;
+      await fetch(url)
+        .then((response) => {
+          return response.json();
+        })
+        .then((jsonResponse) => {
+          if (!jsonResponse.features[0]) {
+            setSemanticLocation("Choose starting location");
+          } else {
+            setSemanticLocation(jsonResponse.features[0].place_name);
+          }
+        });
     });
 
     mapRef.current = map;
@@ -72,7 +84,7 @@ const MapPage = () => {
     return () => {
       map.off("data");
     };
-  }, [lat, lng, zoom]);
+  }, [lat, lng, zoom, semanticLocation]);
 
   useEffect(() => {
     if (loading || !mapLoaded) {
