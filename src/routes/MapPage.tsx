@@ -54,6 +54,7 @@ const MapPage = () => {
       },
       accessToken: mapboxgl.accessToken,
       profile: "mapbox/driving",
+      placeholderOrigin: "Current Location"
     });
 
     map.addControl(directions, "top-left");
