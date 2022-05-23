@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { createReport } from "../utils/airtable";
 import { uploadImage } from "../utils/uploadImage";
+import { markerToCoords } from "../utils/getCoordinateData";
 
 interface AddRecordModalProps {
   isOpen: boolean;
@@ -48,20 +49,26 @@ const AddRecordModal: React.FunctionComponent<AddRecordModalProps> = ({
 
   function completeAddRecord(imageUrl: string) {
     let image: string = imageUrl;
-    createReport({
-      direction,
-      mileMarker,
-      description,
-      incidentType,
-      image,
-    })
-      .then(() => {
-        setSubmitting(false);
-        onClose();
+    markerToCoords(mileMarker, (coord: number[]) => {
+      var lat = coord[0];
+      var long = coord[1];
+      createReport({
+        direction,
+        mileMarker,
+        description,
+        incidentType,
+        image,
+        lat,
+        long,
       })
-      .catch((err) => {
-        console.error(err);
-      });
+        .then(() => {
+          setSubmitting(false);
+          onClose();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    });
   }
 
   return (

@@ -10,6 +10,8 @@ export async function createReport(record: {
   mileMarker: number;
   incidentType: string;
   image: string;
+  lat: number;
+  long: number;
 }) {
   return new Promise((resolve, reject) => {
     base("reports").create(
@@ -22,6 +24,8 @@ export async function createReport(record: {
             mileMarker: record.mileMarker,
             incidentType: record.incidentType,
             image: record.image,
+            lat: record.lat,
+            long: record.long,
           },
         },
       ],
