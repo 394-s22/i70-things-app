@@ -1,5 +1,6 @@
 //@ts-nocheck
 import { Box } from "@mui/material";
+import { rootShouldForwardProp } from "@mui/material/styles/styled";
 //import mapboxgl from "mapbox-gl"; // or "const mapboxgl = require('mapbox-gl');"
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import React, { useEffect, useRef, useState } from "react";
@@ -56,30 +57,40 @@ const MapPage = () => {
       },
       accessToken: mapboxgl.accessToken,
       profile: "mapbox/driving",
+      interactive: false
     });
 
     directions.on("origin", (e) => {
-      console.log(e.feature.geometry.coordinates);
+      console.log("1 ", e.feature.geometry.coordinates);
       setOrigin(e.feature.geometry.coordinates);
+      filterReport()
     });
 
     directions.on("destination", (e) => {
+      console.log("2", e.feature.geometry.coordinates);
       setDestination(e.feature.geometry.coordinates);
+      filterReport()
+      
     });
 
-    directions.on("route", (e) => {
-      console.log("reports", reports);
+    function filterReport(){
+      console.log('origin ', origin, ' dest ', destination)
       if (origin && destination) {
+
         var farRight = Math.max(origin[1], destination[1]);
         var farLeft = Math.min(origin[1], destination[1]);
-
-        // reports.filter( report => {
-        //   if markerToCoords(report.mileMarker, ()=>{
-        //     return coords
-        //   })
-        // })
+        console.log('limits', farRight, farLeft)
+        reports.filter( report => {
+          console.log('report', report.long, report.lat)
+          if (report.long < farRight & report.long > farLeft){
+            return true
+          }
+          return false
+        })
       }
-    });
+    }
+
+    
 
     map.addControl(directions, "top-left");
     map.on("data", () => {
