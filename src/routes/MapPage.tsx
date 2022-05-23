@@ -61,18 +61,24 @@ const MapPage = () => {
     });
 
     directions.on("origin", (e) => {
-      console.log("1 ", e.feature.geometry.coordinates);
-      setOrigin(e.feature.geometry.coordinates);
-      filterReport()
+      syncCall(e.feature.geometry.coordinates, 'o')
     });
+    
 
     directions.on("destination", (e) => {
-      console.log("2", e.feature.geometry.coordinates);
-      setDestination(e.feature.geometry.coordinates);
-      filterReport()
+      syncCall(e.feature.geometry.coordinates, 'd')
       
     });
-
+    function syncCall(location, type){
+      console.log("1 ", location);
+      if (type == 'o'){
+        setOrigin(location);
+      }else{
+        setDestination(location);
+      }
+      filterReport()
+    }
+    
     function filterReport(){
       console.log('origin ', origin, ' dest ', destination)
       if (origin && destination) {
