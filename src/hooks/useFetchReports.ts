@@ -27,6 +27,8 @@ export default function useFetchReports(): {
               direction: record.get("direction"),
               mileMarker: record.get("mileMarker"),
               image: imageAttachments?.[0],
+              lat: record.get("lat"),
+              long: record.get("long")
             };
           });
 

@@ -50,8 +50,8 @@ const AddRecordModal: React.FunctionComponent<AddRecordModalProps> = ({
   function completeAddRecord(imageUrl: string) {
     let image: string = imageUrl;
     markerToCoords(mileMarker, (coord: number[]) => {
-      var lat = coord[0];
-      var long = coord[1];
+      var lat = coord[1];
+      var long = coord[0];
       createReport({
         direction,
         mileMarker,

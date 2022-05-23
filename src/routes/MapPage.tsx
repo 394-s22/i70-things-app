@@ -66,13 +66,13 @@ const MapPage = () => {
     directions.on("destination", (e) => {
       setDestination(e.feature.geometry.coordinates);
     });
-    
+
     directions.on("route", (e) => {
-      console.log('reports', reports)
-      if (origin && destination){
-        var farRight = Math.max(origin[1], destination[1])
-        var farLeft = Math.min(origin[1], destination[1])
-       
+      console.log("reports", reports);
+      if (origin && destination) {
+        var farRight = Math.max(origin[1], destination[1]);
+        var farLeft = Math.min(origin[1], destination[1]);
+
         // reports.filter( report => {
         //   if markerToCoords(report.mileMarker, ()=>{
         //     return coords
@@ -80,7 +80,6 @@ const MapPage = () => {
         // })
       }
     });
-
 
     map.addControl(directions, "top-left");
     map.on("data", () => {
@@ -101,14 +100,12 @@ const MapPage = () => {
     }
 
     reports.forEach((report) => {
-      if (report.mileMarker !== "undefined") {
-        markerToCoords(report.mileMarker, (coords) => {
-          var popup = new mapboxgl.Popup().setText(report.description);
-          new mapboxgl.Marker()
-            .setLngLat([coords[0], coords[1]])
-            .addTo(mapRef.current)
-            .setPopup(popup);
-        });
+      if (report.lat && report.long) {
+        var popup = new mapboxgl.Popup().setText(report.description);
+        new mapboxgl.Marker()
+          .setLngLat({ lon: report.long, lat: report.lat })
+          .addTo(mapRef.current)
+          .setPopup(popup);
       }
     });
   }, [reports, loading, mapLoaded]);
