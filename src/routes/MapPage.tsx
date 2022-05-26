@@ -60,6 +60,7 @@ const MapPage = () => {
       accessToken: mapboxgl.accessToken,
       profile: "mapbox/driving",
       interactive: false,
+      placeholderOrigin: "Current Location",
     });
 
     map.addControl(directions, "top-left");
@@ -69,8 +70,12 @@ const MapPage = () => {
     });
 
     map.on("load", async function () {
-      // directions.setOrigin([lng, lat]);
-      // setMapLoaded(false);
+      navigator.geolocation.getCurrentPosition((position) => {
+        directions.setOrigin([
+          position.coords.longitude,
+          position.coords.latitude,
+        ]);
+      });
       // const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?limit=1&types=place%2Cpostcode%2Caddress&access_token=${mapboxgl.accessToken}`;
       // await fetch(url)
       //   .then((response) => {
