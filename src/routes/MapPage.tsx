@@ -55,6 +55,8 @@ const MapPage = () => {
 
     var directions = new MapboxDirections({
       controls: {
+        instructions: window.innerWidth > 800 ? true : false,
+        //instructions: true,
         profileSwitcher: false,
       },
       accessToken: mapboxgl.accessToken,
