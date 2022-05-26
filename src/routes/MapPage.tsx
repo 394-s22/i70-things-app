@@ -59,7 +59,6 @@ const MapPage = () => {
       },
       accessToken: mapboxgl.accessToken,
       profile: "mapbox/driving",
-      placeholderOrigin: semanticLocation,
       interactive: false,
     });
 
