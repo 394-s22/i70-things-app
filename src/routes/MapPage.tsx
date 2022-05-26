@@ -102,7 +102,7 @@ const MapPage = () => {
         });
       }
     });
-  }, [reports, loading, mapLoaded]);
+  }, [reports, loading, mapLoaded, semanticLocation]);
 
   return (
     <Box
