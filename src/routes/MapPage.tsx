@@ -131,6 +131,7 @@ const MapPage = () => {
 
     reports.forEach((report) => {
       if (report.lat && report.long) {
+        console.log(report.lat, report.long);
         var popup = new mapboxgl.Popup().setText(report.description);
         new mapboxgl.Marker()
           .setLngLat({ lon: report.long, lat: report.lat })
