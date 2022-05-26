@@ -16,7 +16,7 @@ const MapPage = () => {
   const mapRef = useRef(null);
   const [lng, setLng] = useState(0);
   const [lat, setLat] = useState(0);
-  const [zoom] = useState(15);
+  const [zoom] = useState(5);
 
   const { reports, loading } = useFetchReports();
 
@@ -33,7 +33,6 @@ const MapPage = () => {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
-  const [semanticLocation, setSemanticLocation] = useState("");
 
   useEffect(() => {
     // Removed to allow the map to use the lng and lat properties.
@@ -58,62 +57,50 @@ const MapPage = () => {
       },
       accessToken: mapboxgl.accessToken,
       profile: "mapbox/driving",
-      interactive: false,
-      placeholderOrigin: semanticLocation,
+      interactive: false
     });
 
     directions.on("origin", (e) => {
-      syncCall(e.feature.geometry.coordinates, "o");
+      syncCall(e.feature.geometry.coordinates, 'o')
     });
+    
 
     directions.on("destination", (e) => {
-      syncCall(e.feature.geometry.coordinates, "d");
+      syncCall(e.feature.geometry.coordinates, 'd')
+      
     });
-    function syncCall(location, type) {
+    function syncCall(location, type){
       console.log("1 ", location);
-      if (type == "o") {
+      if (type == 'o'){
         setOrigin(location);
-      } else {
+      }else{
         setDestination(location);
       }
-      filterReport();
+      filterReport()
     }
-
-    function filterReport() {
-      console.log("origin ", origin, " dest ", destination);
+    
+    function filterReport(){
+      console.log('origin ', origin, ' dest ', destination)
       if (origin && destination) {
+
         var farRight = Math.max(origin[1], destination[1]);
         var farLeft = Math.min(origin[1], destination[1]);
-        console.log("limits", farRight, farLeft);
-        reports.filter((report) => {
-          console.log("report", report.long, report.lat);
-          if ((report.long < farRight) & (report.long > farLeft)) {
-            return true;
+        console.log('limits', farRight, farLeft)
+        reports.filter( report => {
+          console.log('report', report.long, report.lat)
+          if (report.long < farRight & report.long > farLeft){
+            return true
           }
-          return false;
-        });
+          return false
+        })
       }
     }
+
+    
 
     map.addControl(directions, "top-left");
     map.on("data", () => {
       setMapLoaded(true);
-    });
-
-    map.on("load", async function () {
-      directions.setOrigin([lng, lat]);
-      const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?limit=1&types=place%2Cpostcode%2Caddress&access_token=${mapboxgl.accessToken}`;
-      await fetch(url)
-        .then((response) => {
-          return response.json();
-        })
-        .then((jsonResponse) => {
-          if (!jsonResponse.features[0]) {
-            setSemanticLocation("Choose starting location");
-          } else {
-            setSemanticLocation(jsonResponse.features[0].place_name);
-          }
-        });
     });
 
     mapRef.current = map;
@@ -121,7 +108,7 @@ const MapPage = () => {
     return () => {
       map.off("data");
     };
-  }, [lat, lng, zoom, semanticLocation]);
+  }, [lat, lng, zoom]);
 
   useEffect(() => {
     console.log(mapRef.current);
