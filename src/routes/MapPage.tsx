@@ -59,7 +59,8 @@ const MapPage = () => {
       },
       accessToken: mapboxgl.accessToken,
       profile: "mapbox/driving",
-      // placeholderOrigin: semanticLocation,
+      placeholderOrigin: semanticLocation,
+      interactive: false,
     });
 
     map.addControl(directions, "top-left");
@@ -70,6 +71,7 @@ const MapPage = () => {
 
     map.on("load", async function () {
       // directions.setOrigin([lng, lat]);
+      // setMapLoaded(false);
       // const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?limit=1&types=place%2Cpostcode%2Caddress&access_token=${mapboxgl.accessToken}`;
       // await fetch(url)
       //   .then((response) => {
