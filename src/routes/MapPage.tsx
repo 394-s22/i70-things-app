@@ -20,16 +20,6 @@ const MapPage = () => {
 
   const { reports, loading } = useFetchReports();
 
-  const successLocation = (position) => {
-    setLat(position.coords.latitude);
-    setLng(position.coords.longitude);
-  };
-
-  const errorLocation = () => {
-    setLat(0);
-    setLng(0);
-  };
-
   const [mapLoaded, setMapLoaded] = useState(false);
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
@@ -40,15 +30,30 @@ const MapPage = () => {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: [lng, lat],
-      zoom: zoom,
+      zoom: 15,
     });
 
-    navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
-      enableHighAccuracy: true,
-    });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLat(position.coords.latitude);
+        setLng(position.coords.longitude);
+
+        console.log("done", lng, lat, position);
+        mapRef.current.flyTo({
+          center: [position.coords.longitude, position.coords.latitude],
+        });
+      },
+      () => {
+        setLat(0);
+        setLng(0);
+      },
+      {
+        enableHighAccuracy: false,
+      }
+    );
 
     const nav = new mapboxgl.NavigationControl();
+
     map.addControl(nav, "top-right");
 
     var directions = new MapboxDirections({
@@ -57,50 +62,71 @@ const MapPage = () => {
       },
       accessToken: mapboxgl.accessToken,
       profile: "mapbox/driving",
-      interactive: false
+      interactive: false,
+      placeholderOrigin: "Current Location",
     });
 
     directions.on("origin", (e) => {
-      syncCall(e.feature.geometry.coordinates, 'o')
+      syncCall(e.feature.geometry.coordinates, "o");
     });
-    
+
+    map.on("data", () => {
+      setMapLoaded(true);
+    });
 
     directions.on("destination", (e) => {
-      syncCall(e.feature.geometry.coordinates, 'd')
-      
+      syncCall(e.feature.geometry.coordinates, "d");
     });
-    function syncCall(location, type){
+
+    function syncCall(location, type) {
       console.log("1 ", location);
-      if (type == 'o'){
+      if (type == "o") {
         setOrigin(location);
-      }else{
+      } else {
         setDestination(location);
       }
-      filterReport()
+      filterReport();
     }
-    
-    function filterReport(){
-      console.log('origin ', origin, ' dest ', destination)
-      if (origin && destination) {
 
+    function filterReport() {
+      console.log("origin ", origin, " dest ", destination);
+      if (origin && destination) {
         var farRight = Math.max(origin[1], destination[1]);
         var farLeft = Math.min(origin[1], destination[1]);
-        console.log('limits', farRight, farLeft)
-        reports.filter( report => {
-          console.log('report', report.long, report.lat)
-          if (report.long < farRight & report.long > farLeft){
-            return true
+        console.log("limits", farRight, farLeft);
+        reports.filter((report) => {
+          console.log("report", report.long, report.lat);
+          if ((report.long < farRight) & (report.long > farLeft)) {
+            return true;
           }
-          return false
-        })
+          return false;
+        });
       }
     }
-
-    
 
     map.addControl(directions, "top-left");
     map.on("data", () => {
       setMapLoaded(true);
+    });
+    map.on("load", async function () {
+      navigator.geolocation.getCurrentPosition((position) => {
+        directions.setOrigin([
+          position.coords.longitude,
+          position.coords.latitude,
+        ]);
+      });
+      // const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?limit=1&types=place%2Cpostcode%2Caddress&access_token=${mapboxgl.accessToken}`;
+      // await fetch(url)
+      //   .then((response) => {
+      //     return response.json();
+      //   })
+      //   .then((jsonResponse) => {
+      //     if (!jsonResponse.features[0]) {
+      //       setSemanticLocation("Choose starting location");
+      //     } else {
+      //       setSemanticLocation(jsonResponse.features[0].place_name);
+      //     }
+      //   });
     });
 
     mapRef.current = map;
@@ -108,7 +134,7 @@ const MapPage = () => {
     return () => {
       map.off("data");
     };
-  }, [lat, lng, zoom]);
+  }, []);
 
   useEffect(() => {
     console.log(mapRef.current);
@@ -132,7 +158,7 @@ const MapPage = () => {
       style={{ height: "calc(100vh-120px)" }}
       height="calc(100vh - 128px)"
       ref={mapContainer}
-    ></Box>
+    />
   );
 };
 

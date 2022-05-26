@@ -12,8 +12,6 @@ import useCDOTData from "./hooks/useCDOTData";
 const App = () => {
   const { data } = useCDOTData();
 
-  console.log(data);
-
   return (
     <ThemeProvider theme={theme}>
       <Box className="App" height="100%">
