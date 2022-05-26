@@ -78,6 +78,7 @@ const MapPage = () => {
           }
         });
     });
+    
 
     mapRef.current = map;
 
