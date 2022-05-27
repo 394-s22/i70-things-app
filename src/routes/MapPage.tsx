@@ -89,12 +89,8 @@ const MapPage = ({ setOrigin, setDestination, getDst, getOrg }) => {
         var farRight = Math.max(org[1], dst[1]);
         var farLeft = Math.min(org[1], dst[1]);
         console.log("limits", farRight, farLeft);
-        markers.filter((report) => {
-          console.log("report", report);
-          if ((report.long < farRight) & (report.long > farLeft)) {
-            return true;
-          }
-          return false;
+        markers.forEach((marker) => {
+          console.log("marker", marker);
         });
       }
     }
@@ -141,9 +137,7 @@ const MapPage = ({ setOrigin, setDestination, getDst, getOrg }) => {
             .setLngLat([coords[0], coords[1]])
             .addTo(mapRef.current)
             .setPopup(popup);
-          markerList.push(marker)
-
-          
+          markerList.push(marker)   
         });
         setMarkers(markerList)
 
