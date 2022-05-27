@@ -16,6 +16,7 @@ const MapPage = ({ setOrigin, setDestination, getDst, getOrg }) => {
   const mapRef = useRef(null);
   const [lng, setLng] = useState(0);
   const [lat, setLat] = useState(0);
+  const [zoom] = useState(5);
 
   const { reports, loading } = useFetchReports();
 
@@ -65,12 +66,42 @@ const MapPage = ({ setOrigin, setDestination, getDst, getOrg }) => {
       placeholderOrigin: "Current Location",
     });
 
-    map.addControl(directions, "top-left");
+    directions.on("origin", (e) => {
+      setOrigin(e.feature.geometry.coordinates);
+      filterReport();
+    });
 
     map.on("data", () => {
       setMapLoaded(true);
     });
 
+    directions.on("destination", (e) => {
+      setDestination(e.feature.geometry.coordinates);
+      filterReport();
+    });
+
+    function filterReport() {
+      const org = getOrg();
+      const dst = getDst();
+      console.log("origin ", org, " dest ", dst);
+      if (org && dst) {
+        var farRight = Math.max(org[1], dst[1]);
+        var farLeft = Math.min(org[1], dst[1]);
+        console.log("limits", farRight, farLeft);
+        reports.filter((report) => {
+          console.log("report", report.long, report.lat);
+          if ((report.long < farRight) & (report.long > farLeft)) {
+            return true;
+          }
+          return false;
+        });
+      }
+    }
+
+    map.addControl(directions, "top-left");
+    map.on("data", () => {
+      setMapLoaded(true);
+    });
     map.on("load", async function () {
       navigator.geolocation.getCurrentPosition((position) => {
         setOrigin([position.coords.longitude, position.coords.latitude]);
