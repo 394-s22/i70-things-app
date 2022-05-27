@@ -29,8 +29,6 @@ const App = () => {
     console.log("destination: ", destination)
   }, [origin, destination])
 
-  console.log(data);
-
   return (
     <ThemeProvider theme={theme}>
       <Box className="App" height="100%">

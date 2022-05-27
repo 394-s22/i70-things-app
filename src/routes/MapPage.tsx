@@ -9,124 +9,118 @@ import getCoordinateData, { markerToCoords } from "../utils/getCoordinateData";
 // const mapboxgl = require("mapbox-gl");
 
 mapboxgl.accessToken =
-    "pk.eyJ1IjoibmlraGlsMDkyOSIsImEiOiJjbDJvMWFuM3AxMmFtM2JzM2VwbmZhejZmIn0.LQpNYBoPUTZY4q7EpAGOdg";
+  "pk.eyJ1IjoibmlraGlsMDkyOSIsImEiOiJjbDJvMWFuM3AxMmFtM2JzM2VwbmZhejZmIn0.LQpNYBoPUTZY4q7EpAGOdg";
 
 const MapPage = ({ setOrigin, setDestination, getDst, getOrg }) => {
-    const mapContainer = useRef(null);
-    const mapRef = useRef(null);
-    const [lng, setLng] = useState(0);
-    const [lat, setLat] = useState(0);
-    const [zoom] = useState(5);
+  const mapContainer = useRef(null);
+  const mapRef = useRef(null);
+  const [lng, setLng] = useState(0);
+  const [lat, setLat] = useState(0);
 
-    const { reports, loading } = useFetchReports();
+  const { reports, loading } = useFetchReports();
 
-    const successLocation = (position) => {
+  const [mapLoaded, setMapLoaded] = useState(false);
+
+  useEffect(() => {
+    // Removed to allow the map to use the lng and lat properties.
+    // if (map.current) return; // initialize map only once
+    const map = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/streets-v11",
+      zoom: 15,
+    });
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
         setLat(position.coords.latitude);
         setLng(position.coords.longitude);
-    };
 
-    const errorLocation = () => {
+        console.log("done", lng, lat, position);
+        mapRef.current.flyTo({
+          center: [position.coords.longitude, position.coords.latitude],
+        });
+      },
+      () => {
         setLat(0);
         setLng(0);
-    };
-
-    const [mapLoaded, setMapLoaded] = useState(false);
-    //   const [origin, setOrigin] = useState(null);
-    //   const [destination, setDestination] = useState(null);
-
-    useEffect(() => {
-        // Removed to allow the map to use the lng and lat properties.
-        // if (map.current) return; // initialize map only once
-        const map = new mapboxgl.Map({
-            container: mapContainer.current,
-            style: "mapbox://styles/mapbox/streets-v11",
-            center: [lng, lat],
-            zoom: zoom,
-        });
-
-        navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
-            enableHighAccuracy: true,
-        });
-
-        const nav = new mapboxgl.NavigationControl();
-        map.addControl(nav, "top-right");
-
-        var directions = new MapboxDirections({
-            controls: {
-                profileSwitcher: false,
-            },
-            accessToken: mapboxgl.accessToken,
-            profile: "mapbox/driving",
-            interactive: false
-        });
-
-        directions.on("origin", (e) => {
-            setOrigin(e.feature.geometry.coordinates)
-            filterReport()
-        });
-
-
-        directions.on("destination", (e) => {
-            setDestination(e.feature.geometry.coordinates)
-            filterReport()
-        });
-
-        function filterReport() {
-            let org = getOrg()
-            let dst = getDst()
-            console.log('origin ', org, ' dest ', destination)
-            if (org && dst) {
-                var farRight = Math.max(org[1], dst[1]);
-                var farLeft = Math.min(org[1], dst[1]);
-                console.log('limits', farRight, farLeft)
-                reports.filter(report => {
-                    console.log('report', report.long, report.lat)
-                    if (report.long < farRight & report.long > farLeft) {
-                        return true
-                    }
-                    return false
-                })
-            }
-        }
-
-
-
-        map.addControl(directions, "top-left");
-        map.on("data", () => {
-            setMapLoaded(true);
-        });
-
-        mapRef.current = map;
-
-        return () => {
-            map.off("data");
-        };
-    }, [lat, lng, zoom]);
-
-    useEffect(() => {
-        console.log(mapRef.current);
-        if (loading || !mapLoaded) {
-            return;
-        }
-
-        reports.forEach((report) => {
-            if (report.lat && report.long) {
-                var popup = new mapboxgl.Popup().setText(report.description);
-                new mapboxgl.Marker()
-                    .setLngLat({ lon: report.long, lat: report.lat })
-                    .addTo(mapRef.current)
-                    .setPopup(popup);
-            }
-        });
-    }, [reports, loading, mapLoaded]);
-
-    return (
-        <Box
-            style={{ height: "calc(100vh-120px)" }}
-            height="calc(100vh - 128px)"
-            ref={mapContainer}
-        ></Box>
+      },
+      {
+        enableHighAccuracy: false,
+      }
     );
+
+    const nav = new mapboxgl.NavigationControl();
+
+    map.addControl(nav, "top-right");
+
+    var directions = new MapboxDirections({
+      controls: {
+        instructions: window.innerWidth > 800 ? true : false,
+        //instructions: true,
+        profileSwitcher: false,
+      },
+      accessToken: mapboxgl.accessToken,
+      profile: "mapbox/driving",
+      interactive: false,
+      placeholderOrigin: "Current Location",
+    });
+
+    map.addControl(directions, "top-left");
+
+    map.on("data", () => {
+      setMapLoaded(true);
+    });
+
+    map.on("load", async function () {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setOrigin([position.coords.longitude, position.coords.latitude]);
+      });
+      // const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?limit=1&types=place%2Cpostcode%2Caddress&access_token=${mapboxgl.accessToken}`;
+      // await fetch(url)
+      //   .then((response) => {
+      //     return response.json();
+      //   })
+      //   .then((jsonResponse) => {
+      //     if (!jsonResponse.features[0]) {
+      //       setSemanticLocation("Choose starting location");
+      //     } else {
+      //       setSemanticLocation(jsonResponse.features[0].place_name);
+      //     }
+      //   });
+    });
+
+    mapRef.current = map;
+
+    return () => {
+      map.off("data");
+    };
+  }, []);
+
+  useEffect(() => {
+    if (loading || !mapLoaded) {
+      return;
+    }
+
+    reports.forEach((report) => {
+      if (report.mileMarker !== "undefined") {
+        markerToCoords(report.mileMarker, (coords) => {
+          var popup = new mapboxgl.Popup().setText(report.description);
+          new mapboxgl.Marker()
+            .setLngLat([coords[0], coords[1]])
+            .addTo(mapRef.current)
+            .setPopup(popup);
+        });
+      }
+    });
+  }, [reports, loading, mapLoaded]);
+
+  return (
+    <Box
+      style={{ height: "calc(100vh-120px)" }}
+      height="calc(100vh - 128px)"
+      ref={mapContainer}
+    />
+  );
 };
 
 export default MapPage;
