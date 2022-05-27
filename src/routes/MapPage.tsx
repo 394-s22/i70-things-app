@@ -16,6 +16,7 @@ const MapPage = ({ setOrigin, setDestination, getDst, getOrg }) => {
   const mapRef = useRef(null);
   const [lng, setLng] = useState(0);
   const [lat, setLat] = useState(0);
+  const [markers, setMarkers] = useState([]);
   const [zoom] = useState(5);
 
   const { reports, loading } = useFetchReports();
@@ -81,15 +82,15 @@ const MapPage = ({ setOrigin, setDestination, getDst, getOrg }) => {
     });
 
     function filterReport() {
-      const org = getOrg();
-      const dst = getDst();
+      const org = getOrg;
+      const dst = getDst;
       console.log("origin ", org, " dest ", dst);
       if (org && dst) {
         var farRight = Math.max(org[1], dst[1]);
         var farLeft = Math.min(org[1], dst[1]);
         console.log("limits", farRight, farLeft);
-        reports.filter((report) => {
-          console.log("report", report.long, report.lat);
+        markers.filter((report) => {
+          console.log("report", report);
           if ((report.long < farRight) & (report.long > farLeft)) {
             return true;
           }
@@ -131,19 +132,24 @@ const MapPage = ({ setOrigin, setDestination, getDst, getOrg }) => {
     if (loading || !mapLoaded) {
       return;
     }
-
+    const markerList = []
     reports.forEach((report) => {
       if (report.mileMarker !== "undefined") {
         markerToCoords(report.mileMarker, (coords) => {
           var popup = new mapboxgl.Popup().setText(report.description);
-          new mapboxgl.Marker()
+          const marker = new mapboxgl.Marker()
             .setLngLat([coords[0], coords[1]])
             .addTo(mapRef.current)
             .setPopup(popup);
+          markerList.push(marker)
+
+          
         });
+        setMarkers(markerList)
+
       }
     });
-  }, [reports, loading, mapLoaded]);
+  }, [reports, loading, mapLoaded, getOrg, getDst]);
 
   return (
     <Box

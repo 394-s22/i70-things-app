@@ -24,17 +24,17 @@ const App = () => {
     return destination
   }
 
-  useEffect(() => {
-    console.log("origin: ", origin)
-    console.log("destination: ", destination)
-  }, [origin, destination])
+  // useEffect(() => {
+  //   console.log("origin: ", origin)
+  //   console.log("destination: ", destination)
+  // }, [origin, destination])
 
   return (
     <ThemeProvider theme={theme}>
       <Box className="App" height="100%">
         <Header />
         <Routes>
-          <Route path="/" element={<MapPage setOrigin={setOrigin} setDestination={setDestination} getDst={getDst} getOrg={getOrg}/>} />
+          <Route path="/" element={<MapPage setOrigin={setOrigin} setDestination={setDestination} getDst={destination} getOrg={origin}/>} />
           <Route path="/feed" element={<FeedPage/>} />
         </Routes>
         <Footer />
