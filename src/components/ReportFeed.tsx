@@ -15,27 +15,26 @@ const ReportFeed = () => {
   const reportData = [
     ...reports,
     ...(data?.features ?? [])
-    .filter(item => {
-      if (item.properties.routeName){
-        return item.properties.routeName.includes('I-70')
-      }
-        
-    })
-    .map((item, i) => {
-      return {
-        id: String(i),
-        description: item.properties.travelerInformationMessage,
-        timestamp: item.properties.startTime,
-        mileMarker: item.properties.marker,
-        direction: item.properties.direction,
-      };        
-    }),
+      .filter((item) => {
+        if (item.properties.routeName) {
+          return item.properties.routeName.includes("I-70");
+        }
+      })
+      .map((item, i) => {
+        return {
+          id: String(i),
+          description: item.properties.travelerInformationMessage,
+          timestamp: item.properties.startTime,
+          mileMarker: item.properties.marker,
+          direction: item.properties.direction,
+        };
+      }),
   ];
 
   if (loading || !reportData) {
     return <Typography variant="h6">Loading...</Typography>;
   }
-  console.log(reports)
+  console.log(reports);
 
   return (
     <Box
@@ -45,6 +44,7 @@ const ReportFeed = () => {
       style={{
         alignItems: "center",
       }}
+      paddingBottom="85px"
     >
       {reportData
         .sort(
