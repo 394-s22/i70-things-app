@@ -6,12 +6,6 @@ import ReportFeedItem from "./ReportFeedItem";
 import useCDOTData from "../hooks/useCDOTData";
 import { ReportSharp } from "@mui/icons-material";
 
-declare module "@mui/material/Button" {
-  interface ButtonPropsColorOverrides {
-    gray: true;
-  }
-}
-
 const ReportFeed = () => {
   const { reports, loading } = useFetchReports();
   const { data } = useCDOTData();
@@ -65,17 +59,17 @@ const ReportFeed = () => {
     >
       <Box marginBottom="15px">
         <Button
-          variant="contained"
-          color={directionFilter === "Eastbound" ? "primary" : "gray"}
+          variant={directionFilter === "Eastbound" ? "contained" : "outlined"}
+          color="primary"
           onClick={() => toggleDirection("Eastbound")}
           style={{ margin: 5 }}
         >
           Eastbound
         </Button>
         <Button
-          variant="contained"
+          variant={directionFilter === "Westbound" ? "contained" : "outlined"}
           style={{ margin: 5 }}
-          color={directionFilter === "Westbound" ? "primary" : "gray"}
+          color="primary"
           onClick={() => toggleDirection("Westbound")}
         >
           Westbound
