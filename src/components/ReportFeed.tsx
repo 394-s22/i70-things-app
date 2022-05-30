@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import useFetchReports from "../hooks/useFetchReports";
 import { Report } from "../utils/types";
@@ -6,11 +6,28 @@ import ReportFeedItem from "./ReportFeedItem";
 import useCDOTData from "../hooks/useCDOTData";
 import { ReportSharp } from "@mui/icons-material";
 
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    gray: true;
+  }
+}
+
 const ReportFeed = () => {
   const { reports, loading } = useFetchReports();
   const { data } = useCDOTData();
 
   const [allData, setAllData] = useState<Report[] | null>(null);
+  const [directionFilter, setDirectionFilter] = useState<
+    null | "Eastbound" | "Westbound"
+  >(null);
+
+  const toggleDirection = (direction: "Eastbound" | "Westbound") => {
+    if (directionFilter == direction) {
+      setDirectionFilter(null);
+    } else {
+      setDirectionFilter(direction);
+    }
+  };
 
   const reportData = [
     ...reports,
@@ -46,14 +63,34 @@ const ReportFeed = () => {
       }}
       paddingBottom="85px"
     >
+      <Box marginBottom="15px">
+        <Button
+          variant="contained"
+          color={directionFilter === "Eastbound" ? "primary" : "gray"}
+          onClick={() => toggleDirection("Eastbound")}
+          style={{ margin: 5 }}
+        >
+          Eastbound
+        </Button>
+        <Button
+          variant="contained"
+          style={{ margin: 5 }}
+          color={directionFilter === "Westbound" ? "primary" : "gray"}
+          onClick={() => toggleDirection("Westbound")}
+        >
+          Westbound
+        </Button>
+      </Box>
       {reportData
         .sort(
           (a, z) =>
             new Date(z.timestamp).getTime() - new Date(a.timestamp).getTime()
         )
-        .map((report: any) => (
-          <ReportFeedItem key={report.id} report={report} />
-        ))}
+        .map((report: any) => {
+          if (directionFilter == null || report.direction == directionFilter) {
+            return <ReportFeedItem key={report.id} report={report} />;
+          }
+        })}
     </Box>
   );
 };
