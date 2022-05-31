@@ -56,7 +56,7 @@ const MapPage = () => {
     var directions = new MapboxDirections({
       controls: {
         instructions: window.innerWidth > 800 ? true : false,
-        //instructions: true,
+        // instructions: true,
         profileSwitcher: false,
       },
       accessToken: mapboxgl.accessToken,
@@ -78,18 +78,6 @@ const MapPage = () => {
           position.coords.latitude,
         ]);
       });
-      // const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?limit=1&types=place%2Cpostcode%2Caddress&access_token=${mapboxgl.accessToken}`;
-      // await fetch(url)
-      //   .then((response) => {
-      //     return response.json();
-      //   })
-      //   .then((jsonResponse) => {
-      //     if (!jsonResponse.features[0]) {
-      //       setSemanticLocation("Choose starting location");
-      //     } else {
-      //       setSemanticLocation(jsonResponse.features[0].place_name);
-      //     }
-      //   });
     });
 
     mapRef.current = map;
