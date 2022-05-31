@@ -60,21 +60,6 @@ const ReportFeedCard = ({ report }: ReportCardProps) => {
         width: "400px",
       }}
     >
-      {report.image && (
-        <Box
-          component="img"
-          //@ts-ignore
-          src={report.image.url}
-          style={{
-            borderRadius: "50%",
-            width: "100px",
-            height: "100px",
-            backgroundColor: "red",
-            marginRight: "1rem",
-            flexShrink: 0,
-          }}
-        ></Box>
-      )}
       <Paper
         elevation={3}
         style={{
@@ -84,47 +69,68 @@ const ReportFeedCard = ({ report }: ReportCardProps) => {
           padding: "1rem",
         }}
       >
-        <Typography
-          component="h2"
-          style={{
-            fontSize: "2rem",
-          }}
-        >
-          {report.description}
-        </Typography>
-        <Typography
-          style={{
-            color: "#3c6ffe",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <PushPinIcon
-            style={{
-              marginRight: "0.5rem",
-              fontSize: "1.25rem",
-            }}
-          />
-          Mile Marker {report.mileMarker}
-        </Typography>
-        <Typography
-          style={{
-            color: "#3c6ffe",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <DirectionsIcon
-            style={{
-              marginRight: "0.5rem",
-              fontSize: "1.25rem",
-            }}
-          />
-          {report.direction}
-        </Typography>
-        <Typography variant="caption">{timeAgo(report.timestamp)}</Typography>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Box>
+            <Typography
+              component="h2"
+              style={{
+                fontSize: "2rem",
+              }}
+            >
+              {report.description}
+            </Typography>
+            <Typography
+              style={{
+                color: "#3c6ffe",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <PushPinIcon
+                style={{
+                  marginRight: "0.5rem",
+                  fontSize: "1.25rem",
+                }}
+              />
+              Mile Marker {report.mileMarker}
+            </Typography>
+            <Typography
+              style={{
+                color: "#3c6ffe",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <DirectionsIcon
+                style={{
+                  marginRight: "0.5rem",
+                  fontSize: "1.25rem",
+                }}
+              />
+              {report.direction}
+            </Typography>
+            <Typography variant="caption">
+              {timeAgo(report.timestamp)}
+            </Typography>
+          </Box>
+          {report.image && (
+            <Box
+              component="img"
+              //@ts-ignore
+              src={report.image.url}
+              style={{
+                borderRadius: "18px",
+                width: "100px",
+                height: "100px",
+                backgroundColor: "red",
+                marginRight: "1rem",
+                flexShrink: 0,
+              }}
+            ></Box>
+          )}
+        </Box>
       </Paper>
     </Box>
   );

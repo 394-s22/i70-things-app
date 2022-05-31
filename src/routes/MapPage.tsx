@@ -19,7 +19,6 @@ const MapPage = () => {
   const { reports, loading } = useFetchReports();
 
   const [mapLoaded, setMapLoaded] = useState(false);
-  const [semanticLocation, setSemanticLocation] = useState("");
 
   useEffect(() => {
     // Removed to allow the map to use the lng and lat properties.
