@@ -51,7 +51,7 @@ const ReportFeed = () => {
     <Box
       display="flex"
       flexDirection="column"
-      mt="3rem"
+      mt="5rem"
       style={{
         alignItems: "center",
       }}
