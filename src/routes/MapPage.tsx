@@ -106,7 +106,7 @@ const MapPage = () => {
 
   return (
     <Box
-      style={{ height: "calc(100vh-120px)" }}
+      style={{ height: "calc(100vh-120px)", top:"60px" }}
       height="calc(100vh - 128px)"
       ref={mapContainer}
     />

@@ -15,7 +15,11 @@ const offset = {
 export default function ButtonAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar 
+        position="fixed"
+        color="primary"
+        sx={{ top: 0, bottom: "auto" }}
+        component="header">
         <Toolbar sx={{ display: "flex", justifyContent: "Center" }}>
           <Box sx={offset}>
             <img

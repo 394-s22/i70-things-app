@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Box, Typography, Paper } from "@mui/material/";
+import { Box, Typography, Paper, Modal } from "@mui/material/";
 import { Report } from "../utils/types";
 import PushPinIcon from "@mui/icons-material/PushPin";
 import DirectionsIcon from "@mui/icons-material/Directions";
-
+import { useState } from "react";
 interface ReportCardProps {
   report: Report;
 }
@@ -47,8 +47,23 @@ const timeAgo = (dateParam: any) => {
   }
 };
 
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "35vw",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 // A reportFeedCard
 const ReportFeedCard = ({ report }: ReportCardProps) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <Box
       style={{
@@ -116,19 +131,32 @@ const ReportFeedCard = ({ report }: ReportCardProps) => {
             </Typography>
           </Box>
           {report.image && (
-            <Box
-              component="img"
-              //@ts-ignore
-              src={report.image.url}
-              style={{
-                borderRadius: "18px",
-                width: "100px",
-                height: "100px",
-                backgroundColor: "red",
-                marginRight: "1rem",
-                flexShrink: 0,
-              }}
-            ></Box>
+            <Box>
+              <Box
+                onClick={handleOpen}
+                component="img"
+                //@ts-ignore
+                src={report.image.url}
+                style={{
+                  borderRadius: "18px",
+                  width: "100px",
+                  height: "100px",
+                  backgroundColor: "red",
+                  marginRight: "1rem",
+                  flexShrink: 0,
+                }}
+              ></Box>
+
+              <Modal open={open} onClose={handleClose}>
+                <Box
+                  onClick={handleOpen}
+                  component="img"
+                  //@ts-ignore
+                  src={report.image.url}
+                  sx={style}
+                ></Box>
+              </Modal>
+            </Box>
           )}
         </Box>
       </Paper>
