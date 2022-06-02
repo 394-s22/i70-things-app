@@ -15,3 +15,16 @@ You will also see any lint errors in the console.
 
 Creates, builds, and deploys the app to Firebase.
 
+## Setup for the app
+
+### Installling Commandline tools
+
+https://firebase.google.com/docs/cli
+this downloads the commandline interface for firebase
+
+### Api keys
+
+#### Mapbox
+
+https://docs.mapbox.com/help/glossary/access-token/
+This link is how you generate an access token. Then on line 10 of src/routes/MapPage.tsx replace the placeholder with the newly generated access token
