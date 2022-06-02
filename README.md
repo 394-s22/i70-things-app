@@ -49,6 +49,12 @@ This link is how you get the API Key for the CDOT. On line 9 of `backend/functio
 Alejandro is an owner for the i70-things app within firebase. The console can be accessed via console.firebase.com.
 The firebase config is in `src/utils/firebase.ts`
 
+We use firebase for the following:
+
+- Hosting
+- Storage (for images)
+- Functions (see below)
+
 ##### Firebase functions
 
 Firebase functions help us access the CDOT API while bypassing CORS restrictions. To deploy, change into the `backend/funcitons` directory and run `yarn deploy`
