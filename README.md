@@ -37,6 +37,7 @@ This link is how you generate an API key for Airtable. On line 3 of `src/utils/a
 
 https://airtable.com/api
 This link is how you get the base key for Airtable. On line 4 of `src/utils/airtable.ts`, replace the placeholder with the newly generated base key.
+This link is also a great resource for any api questions.
 
 #### CDOT Feed
 

@@ -1,10 +1,7 @@
 import Airtable from "airtable";
 
-//export const base = new Airtable({ apiKey: api key placeholder }).base(
-//  base key placeholder
-//);
-export const base = new Airtable({ apiKey: "keylvCxPGVKWeoE4u" }).base(
-  "appXtIml8So8edpwF"
+export const base = new Airtable({ apiKey: "API_KEY_HERE" }).base(
+  "BASE_ID_HERE"
 );
 
 export async function createReport(record: {

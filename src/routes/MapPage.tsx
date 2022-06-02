@@ -7,9 +7,7 @@ import useFetchReports from "../hooks/useFetchReports.ts";
 import getCoordinateData, { markerToCoords } from "../utils/getCoordinateData";
 // const mapboxgl = require("mapbox-gl");
 
-mapboxgl.accessToken =
-// placeholder
-  "pk.eyJ1IjoibmlraGlsMDkyOSIsImEiOiJjbDJvMWFuM3AxMmFtM2JzM2VwbmZhejZmIn0.LQpNYBoPUTZY4q7EpAGOdg";
+mapboxgl.accessToken = "PLACEHOLDER";
 
 const MapPage = () => {
   const mapContainer = useRef(null);
@@ -107,7 +105,7 @@ const MapPage = () => {
 
   return (
     <Box
-      style={{ height: "calc(100vh-120px)", top:"60px" }}
+      style={{ height: "calc(100vh-120px)", top: "60px" }}
       height="calc(100vh - 128px)"
       ref={mapContainer}
     />
