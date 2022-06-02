@@ -8,6 +8,7 @@ import getCoordinateData, { markerToCoords } from "../utils/getCoordinateData";
 // const mapboxgl = require("mapbox-gl");
 
 mapboxgl.accessToken =
+// placeholder
   "pk.eyJ1IjoibmlraGlsMDkyOSIsImEiOiJjbDJvMWFuM3AxMmFtM2JzM2VwbmZhejZmIn0.LQpNYBoPUTZY4q7EpAGOdg";
 
 const MapPage = () => {

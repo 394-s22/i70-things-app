@@ -10,6 +10,7 @@ export const getCdotData = functions.https.onRequest(
 
     corsHandler(request, response, async () => {
       const res = await fetch(
+        // "https://data.cotrip.org/api/v1/incidents?apiKey=placeholderForAPIKey&limit=10"
         "https://data.cotrip.org/api/v1/incidents?apiKey=E05N15S-Q754ZG9-HFGKVHR-HJCASDJ&limit=10"
       );
 
