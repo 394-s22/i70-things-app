@@ -6,17 +6,19 @@ In the project directory, you can run:
 
 ### `yarn start`
 
-Runs the app in the development mode.\
+Runs the app in the development mode, in addition to installing all dependencies needed.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
+The page will reload if you make edits.
 You will also see any lint errors in the console.
 
 ### `yarn deploy`
 
-Creates, builds, and deploys the app to Firebase.
+Creates, builds, and deploys the app to Firebase (as long as it is configured).
 
-## Setup for the app
+## Setup for the app (required before it can run)
+
+_Note: it is recommended that these secrets are storied in a .env file, not directly in the code_
 
 ### Installing Command line tools
 
@@ -62,17 +64,13 @@ Firebase functions help us access the CDOT API while bypassing CORS restrictions
 ## Known Bugs
 
 - Finding current location can be hindered based on browser or internet connection
-    - Safari, Brave, or privacy based Chrome
+  - Safari, Brave, or privacy based Chrome
 - Anytime you go from feed to map, the map resets to the current location
 - Mobile View:
-    - Can't see map because directions panel is covering map
-
+  - Can't see map because directions panel is covering map
 
 ## Next steps
 
 - Filtering the markers along route and direction
 - Display weather conditions of each road
 - Add 'Go' button to add turn-by-turn navigation
-
-
-
