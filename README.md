@@ -57,4 +57,22 @@ We use firebase for the following:
 
 ##### Firebase functions
 
-Firebase functions help us access the CDOT API while bypassing CORS restrictions. To deploy, change into the `backend/funcitons` directory and run `yarn deploy`
+Firebase functions help us access the CDOT API while bypassing CORS restrictions. To deploy, change into the `backend/functions` directory and run `yarn deploy`
+
+## Known Bugs
+
+- Finding current location can be hindered based on browser or internet connection
+    - Safari, Brave, or privacy based Chrome
+- Anytime you go from feed to map, the map resets to the current location
+- Mobile View:
+    - Can't see map because directions panel is covering map
+
+
+## Next steps
+
+- Filtering the markers along route and direction
+- Display weather conditions of each road
+- Add 'Go' button to add turn-by-turn navigation
+
+
+
