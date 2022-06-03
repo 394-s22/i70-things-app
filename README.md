@@ -16,9 +16,9 @@ You will also see any lint errors in the console.
 
 Creates, builds, and deploys the app to Firebase (as long as it is configured).
 
-## Setup for the app (required before it can run)
+## Setup for the app (required before app can run)
 
-_Note: it is recommended that these secrets are storied in a .env file, not directly in the code_
+_Note: it is recommended that these secrets are stored in a `.env` file, not directly in the code_
 
 ### Installing Command line tools
 
@@ -38,7 +38,7 @@ https://support.airtable.com/hc/en-us/articles/219046777-How-do-I-get-my-API-key
 This link is how you generate an API key for Airtable. On line 3 of `src/utils/airtable.ts`, replace the placeholder with the newly generated API key.
 
 https://airtable.com/api
-This link is how you get the base key for Airtable. On line 4 of `src/utils/airtable.ts`, replace the placeholder with the newly generated base key.
+This link is how you get the base key for Airtable. On line 4 of `src/utils/airtable.ts`, replace the placeholder with the base (table) key.
 This link is also a great resource for any api questions.
 
 #### CDOT Feed
@@ -60,6 +60,12 @@ We use firebase for the following:
 ##### Firebase functions
 
 Firebase functions help us access the CDOT API while bypassing CORS restrictions. To deploy, change into the `backend/functions` directory and run `yarn deploy`
+
+### Accounts transferred to Alejandro (i70tings@gmail.com)
+
+- Trello
+- Airtable
+- Firebase
 
 ## Known Bugs
 
